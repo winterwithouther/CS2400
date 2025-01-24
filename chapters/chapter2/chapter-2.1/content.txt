@@ -1,0 +1,178 @@
+Chapter Goals 2.1.1
+- To be able to define and initialize variables and constants
+- To understand the properties and limitations of integer and floating point numbers
+- To write arithmetic expressions and assignment statements in C++
+- To appreciate the importance of comments and good code layout
+- To create programs that read and process input, and display the results
+- To process strings, using the standard C++ string type
+
+Numbers and character strings (such as the ones on this display board)
+are important data types in any C++ program. In this chapter, you will learn
+how to work with numbers and text, and how to write simple programs
+that perform useful tasks with them.
+
+When your program carries out computations, you will want to store values so
+that you can use them later. In a C++ program, you will use variables to store
+vaues. In this section, you will learn how to define and use variables.
+(Defintion of variable: A symbol in a program that identifies a storage location
+that can hold different values.)
+
+To illustrate the use of variables, we will develop a program that solves the
+following problem. Soft drinks are sold in cans and bottles. A store offers a
+six-pack of 12-ounce cans for the same price as a two-liter bottle. Which
+should you buy? (Twelve fluid ounces equal approximately 0.355 liters.)
+
+In our program, we will define variables for the number of cans per pack and
+for the volume of each can. Then we will compute the volume of a six-pack in
+liters and print out the answer.
+
+----------------------------------------------------------------------------
+
+VARIABLE DEFINITIONS
+
+The following statement defines a variable named cans_per_pack:
+
+int cans_per_pack = 6;
+
+a variable is a storage location in a computer program. Each variable has a
+name and holds a value. (Defintion of variable: A symbol in a program that
+identifies a storage location that can hold different values.)
+
+A variable is a similar to a parking space in a parking garage. The parking space
+has an identifier (such as "J053"), and it can hold a vehicle. A variable has a 
+name (such as cans_per_pack), and it can hold a value (such as 6).
+
+When defining a variable, you usually want to initilize it. That is, you specify
+the value that should be stored in the variable. Consider again this variable
+definition: (Definition of initialization: Setting a variable to a well-defined value
+when it created.)
+
+int cans_per_pack = 6;
+
+The variable cans_per_pack is initialized with the value 6.
+
+Like a parking space that is restricted to a certain type of vehicle (such as a
+compact car, motorcycle, or a electric vehicle), a variable in C++ stores data of a
+specific type. C++ supports quite a few data types: numbers, text strings, files,
+dates, and many others. You must specify the type whenever you define a
+variable (SEE SYNTAX 2.1.1). (Definition of type: A named set of values and the
+operations that can be carried out with them.)
+
+----------------------------------------------------------------------------
+
+SYNTAX 2.1.1: VARIABLE DEFINITION.
+
+The cans_per_pack variable is an integer, a whole number without a
+fractional part. In C++, this type is called in. (see the next section for more
+information about number types in C++.) (Defintion of integer: A number that
+cannot have a fraction part)
+
+Note that the type comes before the variable name:
+
+int cans_per_pack = 6;
+
+----------------------------------------------------------------------------
+
+NUMBER TYPES
+
+In C++, there are several different types of numbers. You use the integer
+number type, called int in C++, to denote a whole number without fractional
+part. For example, there must be an integer whole number of cans in any pack of
+cans-- you cannot have a fraction of a can.
+
+When a fractional part is required (such as in the number 0.355), we use
+floating-point numbers. The most commonly used type for floating-point
+numbers in C++ is called a double. (If you want to know the reason, read
+Special Topic 2.2) Here is the definition of a floating-point variable:
+(Definition of floating-point number: A number that can have a fractional part.)
+
+double can_volume = 0.355;
+
+When a value such as 6 or 0.355 occurs in a C++ program, it is called a
+number literal. Table 2.1.2 shows how to write integer and floating-point literals
+in C++. (Definition of literal: A constant value in a program that is
+explicitly written as a number, such as -2 or 6.02214115E23, or as a character
+sequence, such as Harry.)
+
+----------------------------------------------------------------------------
+
+VARIABLE NAMES
+
+When you define a variable, you should pick a name that explains its purpose.
+For example, it is better to use a descriptive name, such as can_volume, than
+a terse name, such as cv.
+
+In C++, there a few simple rules for variable names:
+
+1. Variable names must start with a letter or the underscore (_) character,
+and the remaining characters must be letters, numbers, or underscores.
+
+2. You cannot use other symbols such as $ or %. Spaces are not permitted
+inside names either. You can use an underscore instead, as in can_volume
+
+3. Variable names are case sensitive, that is, Ca_volume and can_volume
+are different names. For that reason, it is a good idea to 
+use only lowercase letters in variable names. It is also a convention
+among many C++ programmers that variable names should start with a
+lowercase letter. (Definition of case sensitive: Distinguishing upper- and lowercase characters.)
+
+4. You cannot use reserved words such as double or return as names;
+these words are reserved exclusively for their special C++ meanings.
+(See Appendix A.) (Definition of reserved word: A word that has a special
+meaning in a programming language and therefore cannot be used as a
+name by the programmer.)
+
+----------------------------------------------------------------------------
+
+THE ASSIGNMENT STATEMENT
+
+You use the assignment statement to place a new value into a variable. Here is
+an example: (Definition of assignment statement: A statement that places a
+new value into an existing variable.)
+
+cans_per_pack = 8;
+
+The left-hand side of an assignment statement consists of a variable. The 
+right-hand side is an expression that has a value. That value is stored in the
+variable, overwriting its previous contents.
+
+There is an important difference between a variable definition and an
+assignment statement:
+
+int cans_per_park = 6; // variable definition
+
+cans_per_pack = 8; // assignment statement
+
+The first statement is the definition of cans_per_pack. It is an instruction to
+create a new variable of type int, to give it the name cans_per_pack, and
+to initialize it with 6. The second statement is an assignment statement: an instruction
+to replace the contents of the existing variable cans_per_pack with another value.
+
+----------------------------------------------------------------------------
+
+SYNTAX 2.1.2 ASSIGNMENT
+
+The = sign doesn't mean that the left-hand side is equal to the right-hand side.
+The expression on the right is evaluated, and its value is placed into the variable on the left.
+
+Do not confuse the assignment operation with the = used in in algebra to denote equality.
+The assignment operator is an instruction to do something, namely
+place a value into a variable. The mathematical equality states the fact that
+two vaules are equal.
+
+For example, in C++, it is perfectly legal to write
+
+total_volume = total_volume + 2;
+
+It means to look up the value stored in the variable total_volume, add 2 to it,
+and place the result back into the total_volume. (See Figure 2.1.1) The net 
+effect of executing this statement is to increment total_volume by 2. For example,
+if total_volume was 2.13 before execution of the statement, it is set to 4.13 afterwards.
+Of course, in mathematics it would make no sense to write that x = x + 2. No value can equal
+itself plus 2.
+
+----------------------------------------------------------------------------
+
+CONSTANTS
+
+When a variable is defined with the reserved word const, its value 
