@@ -175,4 +175,20 @@ itself plus 2.
 
 CONSTANTS
 
-When a variable is defined with the reserved word const, its value 
+When a variable is defined with the reserved word const, its value can never
+change. Constants are commonly written using capital letters to distinguish
+them visually from regular variables.
+
+const double BOTTLE_VOLUME = 2;
+
+it is good programming style to use named constants in your program to
+explain the meawnings of numeric values. For example, compare the statements
+
+double_total_volume = bottles * 2;
+
+and 
+
+double_total_volume = bottles * BOTTLE_VOLUME;
+
+A programmer reading the first statement may not understand the
+significance of the number 2. The second statement, with a named constant,
