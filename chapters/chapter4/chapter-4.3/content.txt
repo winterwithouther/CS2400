@@ -1,0 +1,50 @@
+4.3 PROBLEM SOLVING: HAND-TRACING
+
+In Programming Tip 3.10.1, you learned about the method of hand-tracing.
+When you hand-trace code or pseudocode, you write the names of the variables
+on a sheet of paper, mentally execute each step of the code and update the variables.
+
+It is best to have the code written or printed on a sheet of paper.
+Use a marker, such as a paper clip, to mark the current line.
+Whenever a variable changes, cross out the old value and write
+the new value below. When a program produces output, also
+write down the output in another dolumn.
+
+Consider this example. What value is displayed?
+
+int n = 1729;
+int sum = 0;
+while (n > 0) {
+    int digit = n % 10;
+    sum = sum + digit;
+    n = n / 10;
+}
+
+cout << sum << endl;
+
+This statement is an output statement. The value that is output
+is the value of sum, which is 19.
+
+Of course, you can get the same answer by just running the code.
+However, hand-tracing can give you an insight that you would not get
+if you simply ran the code. Consider again what hapepns in each iteration.
+
+We extract the last digit of n.
+We add that digit to sum.
+We strip the digit off n.
+
+In other words, the loop forms the sum of the digits in n. You
+now know what the loop does for any value of n, not just the
+one in the example (Why would anyone want to form the sum of the digits?
+Operations of this kind are useful for checking the validity of credit card
+numbers and other forms of ID numbers-- see Programming Project 4.22.21)
+
+Hand-tracing does not just help you understand code that works
+correctly. It is a powerful technique for finding errors in your code.
+When a program behaves in a way that you don't expect, get out a sheet of paper and track the
+values of the variables as you mentally step through the code.
+
+You don't need a working program to do hand-tracing. You can hand-trace psuedocode.
+In fact, it is an excellent idea to hand-trace your psuedocode before you go to the 
+trouble of translating it into actual code, to confirm that it works correctly.
+
