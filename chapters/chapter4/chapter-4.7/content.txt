@@ -1,0 +1,53 @@
+4.7 SPECIAL TOPIC: CLEARING THE FAILURE STATE
+
+When an input operation has failed, all further input operations also fail. Consider the doloop.cpp
+program in Section 4.5 in which a user is prompted to enter a value that is not negative. Suppose
+the user enters a value that is not an integer, such as the string zero.
+
+Then the operation
+
+cin >> value;
+
+sets cin to the failed state. IF you want to give the user another chance to enter a value, you need to
+clear the failed state, by calling the clear member function. You also need to read and discard 
+the offending item:
+
+cin.clear();
+string item;
+cin >> item;
+
+Now the user can try again. Here is an improvised version of the do loop:
+
+do {
+    cout << "Enter a number >= 0: ";
+    cin >> value;
+
+    if (cin.fail()) {
+        // Clear the failed state
+        cin.clear();
+        // Read and discard the item
+        string item;
+        cin >> item;
+        // Set an invalid input
+        value = -1;
+    }
+} while (value < 0);
+
+Note that we set value to an invalid input if the input was not a number, in order to enter the loop
+once more.
+
+Here is another situation in which you need to clear the failed state. Suppose your read two number
+sequences, each of which has a letter as a sentinel. You read the first sequence:
+
+cout << "Enter values, Q to quit.\n";
+while (cin >> values) {
+    process input
+}
+
+Suppose the user has entered 30 10 5 Q. The input of Q has caused the failure, because only
+sucessfully processed characters are removed from the input, the Q character is still present.
+Clear the stream and read the sentinel into a string variable:
+
+cin.clear();
+string sentinel;
+cin >> sentinel;
