@@ -1,0 +1,34 @@
+4.8 SPECIAL TOPIC: THE LOOP-AND-A-HALF PROBLEM
+AND THE BREAK STATEMENT
+
+Some programmers dislike loops that are controlled by a boolean variable, such as:
+
+bool done = false;
+while (!done) {
+    cin >> value;
+    if (cin.fail()) {
+        done = true;
+    } else {
+        process value
+    }
+}
+
+The actual test for loop termination is in the middle of the loop, not at the top. This is called a loop
+and a half because one must go halfway into the loop before knowing whether one needs to
+terminate. (Definition of loop and a half: A loop whose termination decision is neither at the
+beginning nor at the end)
+
+As an alternative, you can use the break reserved word:
+
+while (true) {
+    cin >> value;
+    if (cin.fail()) { break; }
+    process value.
+}
+
+The break statement breaks out of the enclosing loop, independent of the loop condition.
+
+In the loop-and-a-half case, break statements can be beneficial. But it is difficult to lay down clear
+rules as to when they are safe and when they should be avoided. We do not use the break
+statements in this book.
+
