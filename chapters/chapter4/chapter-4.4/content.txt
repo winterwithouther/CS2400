@@ -1,0 +1,127 @@
+4.4 THE FOR LOOP
+
+It often happens that you want to execute a sequence of
+statements a given number of times. You can use a while loop
+that is controlled by a counter, as in the following example:
+
+counter = 1; // Initialize the counter
+while (counter <= 10) { // Check the counter
+    cout << counter << endl;
+    counter++; // Update the counter
+}
+
+Because this loop type is so common, there is a special form
+for it, called the for loop.
+
+for (counter = 1; counter <= 10; counter++) {
+    cout << counter << endl;
+}
+
+Some people call this loop count-controlled. In contrast, the
+while loop oif the preceding section can be called an event-controlled
+loop because it executes until an event occurs (for
+example, when the balance reaches the traget.) Another commonly-used term
+for a count-controlled loop is definite. You know from the outset
+that the loop body will be executed a definite number of times -- ten times
+in our example.In contrast,  you do not know how many iterations it takes to
+accumulate a target balance. Such a loop is called indefinite.
+
+SYNTAX 4.4.1: FOR STATEMENT.
+
+The for loop neatly groups the initialization, condition, and
+update expressions together. However, it is important and realize
+that these expressions are not executed together.
+- The initialization is executed once, before the loop is entered.
+- The condition is checked before each iteration.
+- The update is executed after each iteration
+
+A for loop can count down instead of up:
+
+The increment or decrement need not be in steps of 1:
+
+So far, we assumed that the counter variable had already
+been defined before the for loop. Alternatively, you can define
+a variable in the loop initilization. Such a variable is defined only in the loop.
+
+PROGRAMMING TIP 4.4.1: USE FOR LOOPS FOR THEIR INTENDED PURPOSE ONLY
+
+A for loop is an idion for a loop of a particular form. A value
+runs from the start to the end, with a constant increment or decrement.
+
+The compiler won't check whether the initialization, condition,
+and update expressions are related. For example, the following loop is legal:
+
+// Confusing -- unrelated expressions
+
+for (cout << "Inputs: "; cin >> x; sum = sum + x) {
+    count++;
+}
+
+However, programmers reading such a for loop will be 
+confused because it does not match their expectations.  Use
+a while loop for iterations that do not follow the for idiom.
+
+PROGRAMMING TIP 4.4.2: CHOOSE BOUNDS THAT MATCH YOUR TASK.
+
+Suppose you want to print line numbers that go from 1 to 10.
+Of course, you will want to use a loop
+
+for (int i = 1; i <= 10; i++)
+
+The values for i are bounded by the relation 1 <= i <= 10.
+Because there are <= on both bounds, the bounds are called
+symmetric. (Definition of symmetric bounds: Bounds that include the starting index and the ending index)
+
+When traversing the characters in a string, it is more natural to use the bounds.
+
+for (int i = 0; i < str.length(); i++)
+
+In this loop, i traverses all valid positions in the string. You
+can access the ith character as a str.substr(i, 1). The
+values for i are bounded by 0 <= i <= str.length(), with a <=
+to the left and a < to the right. That is appropriate, because str.length()
+is not a valid position. Such bounds are called asymmetric. (Definition of asymmetric bounds:
+Bounds that include the starting index but not the ending index.)
+
+In this case, it is not a good idea to use symmetric bounds:
+
+for (int i = 0; i <= str.length() - 1; i++)
+// Use < instead
+
+The asymmetric form is easier to understand.
+
+PROGRAMMING TIP 4.4.3: COUNT iterations
+
+Finding the correct lower and upper bo unds for an iteration
+can be confusing. Should you start at 0 or 1? Should you
+use <= or < in termination condition?
+
+Counting the number of iterations is a very useful device for
+better understanding a loop. Counting is easier for loops
+with asymmetric bounds. The loop
+
+for (int i = a; i < b; i++)
+
+is excecuted b - a times. For example, the loop
+
+for (int i = 0; i < 10; i++)
+
+runs ten times, with values 0, 1, 2, 3, 4, 5, 6, 7, 8, and 9
+
+The loop with symmetric bounds,
+
+for (int i = a; i <= b; i++)
+
+is executed b - a + 1 times. That +1 is the source of many programming errors
+
+For example,
+
+for (int i = 0; i <= 10; i++) 
+
+runs 11 times. Maybe that is what you want; if not, start at 1 
+or use < 10.
+
+One way to visualize this +1 error is by looking at a fence.
+Each section has one fence post to the left, and there is a
+final post on the right of the last section. Forgetting to count
+the last value is often called a "fence post error".
