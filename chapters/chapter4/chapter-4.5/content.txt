@@ -1,0 +1,30 @@
+4.5 THE DO LOOP
+
+Sometimes you want to execute the body of a loop at least
+once and perform the loop test after the body is executed.
+The do loop serves that purpose:
+
+do {
+    statements
+} while (condition)
+
+The body of the do loop is executed first, then the condition is
+tested.
+
+Some people call such a loop a post-test loop because the
+condition is tested after completing the loop body. In contrast,
+while and for loops are pre-test loops. In those loop types,
+the condition is tested before entering the loop body.
+
+A typical example for such a loop is input validation. Suppose
+you ask a user to enter a value < 100. If the user didn't pay
+attention and entered a larger value, you ask again, until the value
+is correct. Of course, you cannot test the value until the user has entered it.
+This is a perfect fit for the do loop
+
+int value;
+do {
+    cout << "Enter a value < 100: ";
+    cin >> value;
+} while (value >= 100);
+
