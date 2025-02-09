@@ -1,0 +1,17 @@
+4.2 COMPUTING AND SOCIETY: THE FIRST BUG
+
+According to legend, the first bug was found in the Mark II, a 
+huge elctromechanical computer at Harvard University. It
+really was caused by a bug - a moth was trapped in a relay switch.
+
+Actually, from the note that the operatoir lewft in the log book
+next to the moth (see the photo), it appears as if the term "bug"
+had already been active use at the time.
+
+The pioneering computer scientist Maurice Wilkies wrote, 
+"Somehow, at the Moore School and afterwards, one had
+always assumed there would no particular difficulty in
+getting programs rightg. I can remember the exact instant
+in time at which it dawned on me that a great part of my future
+life would be spent finding mistakes in my own programs."
+
