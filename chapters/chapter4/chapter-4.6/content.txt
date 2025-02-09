@@ -1,0 +1,119 @@
+4.6 PROCESSING INPUT
+
+Whenever you read a sequence of inputs, you need to have some method of indicating the end of
+the sequence. Sometimes you are lucky and no input value can be zero. Then you can prompt the
+user to keep entering numbers, or 0 to finish the sequence. If zero is allowed but negative numbers
+are not, you can use -1 to indicate termination. A value that serves as a signal for termination is
+called a sentinel. (Definition of sentinel: A value in input that is not to be used as an actual input
+value but to signal the end of input.)
+
+Let's put this technique to work in a program that computes the average of a set of salary values.
+In our sample program, we will use -1 as a sentinel. An employee would surely not work for a negative salary,
+but there are may be volunteers who work for free.
+
+Inside the loop, we read an input. If the input is not -1, we process it. In order to compute the average,
+we need the total sum of all salaries, and the number of inputs.
+
+while (...) {
+    cin >> salary;
+    if (salary != -1) {
+        sum = sum + salary;
+        count++;
+    }
+}
+
+We stay in the loop while the sentinel value is not detected.
+
+while (salary != -1) {
+    ...
+}
+
+there is just one problem: When the loop is entered for the first time, no data value has been read.
+Be sure to initialize salary with some value other than the sentinel:
+
+double salary = 0; // Any value other than -1 will do
+
+Alternatively, use a do loop
+
+do {
+    ...
+} while (salary != -1)
+
+READING UNTIL INPUT FAILS
+
+Numeric sentinels only work if there is some restriction on the input. In many cases, though, there
+isn't. Suppose you want to compute the average of a data set that may comtain 0 or negative values.
+Then you cannot use 0 or -1 to indicate the end of the input.
+
+In such a situation, you can raed input data until input fails. As you hvae seen in section 3.16, the condition.
+
+cin.fail()
+
+is true if the preceeding input has failed. For example, supposed that the input was read with these
+statements
+
+double value;
+cin >> value;
+
+if the user enters a value that is not a number (Such as Q), then the input fails.
+
+We now encounter an additional complexity. You only know that input failed after you have entered
+the loop and attempted to read it. To remember the failure, use a boolean variable.
+
+cout << "Enter values, Q to quit: ";
+bool done = false;
+while (!done) {
+    cin >> value;
+    if (cin.fail()) {
+        done = true;
+    } else {
+        process value.
+    }
+}
+
+Some programmers dislike the introduction of a Boolean variable to control the loop.
+Special Topic 4.8 shows an alternative mechanism for leaving a loop. However, when reading input,
+there is an easier way. The expression
+
+cin >> value
+
+can be used in a condition. It evaluates to true if cin has not failed after reading value.
+Therefore, you can read and process a set of inputs with the following loop:
+
+cout << "Enter values, Q to quit: ";
+while (cin >> value) {
+    process value.
+}
+
+This loop is suitable for processing a single sequence of inputs. You will learn more about reading
+inputs in Chapter 8.
+
+The following program uses a Boolean variable to control a loop.
+
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    double sum = 0;
+    int count = 0;
+    double value = 0;
+    cout << "Enter values, Q to quit: ";
+    bool done = false;
+    while (!done) {
+        cin >> value;
+        if (cin.fail()) {
+            done = true;
+        } else {
+            sum = sum + value;
+            count++;
+        }
+    }
+
+    if (count > 0) {
+        double average = sum / count;
+        cout << "Average: " << average << endl;
+    } else {
+        cout << "No Data" << endl;
+    }
+}
