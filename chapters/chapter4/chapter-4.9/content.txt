@@ -1,0 +1,28 @@
+4.9 SPECIAL TOPIC: REDIRECTION OF INPUT AND OUTPUT
+
+Consider the sentinel.cpp program that computes the average value of an input sequence.
+If you use such a program, then it is quite likely that you already have the values in file, and it seems
+a shame that you have to type them all in again. The command line interface of your operating
+system provides a way to link a file to the input of a program, as if all the characters in the file had
+actually been typed by a user. If you type
+
+sentinel < numbers.txt
+
+The program is executed. Its input instructions no longer expect input from the keyboard. All input
+commands get their input from the file numbers.txt. This process is called input redirection.
+
+input redirection is an excellent tool for testing programs. When you develop a program and fix its
+bugs, it is boring to keep entering the same input every time you run the program. Spend a few
+minutes putting the inputs in a file, and use redirection.
+
+You can also redirect output. In this program, that is not terribly useful. If you run
+
+sentinel < numbers.txt > output.txt
+
+the file output.txt contains the input prompts and the output, such as
+
+Enter salaries, -1 to finish:
+Average salary: 15
+
+However, redirecting output is obviously useful for programs that produce lots of output.
+You can print the file containing the output or edit it before you turn it in for grading.
