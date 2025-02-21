@@ -1,0 +1,68 @@
+5.1 FUNCTIONS AS BLOCK BOXES
+
+Chapter Goals 5.1.1
+
+- To be able to implement functions
+- To become familiar with the concept of parameter passing
+- To appreicate the important of function comments
+- To develop stategies for decomposing complex tasks into smaller ones
+- To be able to determine the scope of a variable
+- To recognize when to use value and reference parameteres
+
+Functions are a fundamental building block of C++ programs.
+A function packages a computation into a form that can be easily understood and reused.
+(The person in the photo is executing the function 'make two cups of espresso')
+In this chapter, you will learn how to design and implement your own functions. Using the process
+of stepwise refinement, you will be able to break up complex tasks into sets of cooperating functions.
+
+A function is a sequence of instructions with a name. You have already encountered
+several functions. For example, the function named pow, which was introduced in Chapter 2,
+contains instructions to compute a power x^y. Moreover, every C++ program
+has a function called main. (Definition of function: A sequence of statments that can
+be invoked multiple times, with difference values for its parameter variables.)
+
+You call a function in order to execute its instructions. For example, consider the following program:
+
+int main() {
+    double z = pow(2, 3);
+    ...
+}
+
+By using the expression pow(2, 3), main calls the pow function, asking it to compute the power
+2^3. The main function is temporarily suspended. The instructions of the pow function execute and
+compute the result. The pow function returns its result (that is, the value 8) back to main, and the
+main function resumes execution
+
+When another function calls the pow function, it provides "inputs", such as the expressions 
+2 and 3 in the pow(2, 3). These expressions are called arguments. This terminology avoids
+confusion with other inputs, such as those provided by a human user. Similarly, the "output" that the
+pow function computes is called the return value . (Definition of argument: A value supplied in a function call,
+or one of thev alues combined by an operator) (Definition of return value: The value returned by
+a function through a return statement.)
+
+Functions can have multiple arguments, but they have only one return value.
+
+Note that the return value of a function is returned to the calling function, not displayed on the
+screen. For example, suppose your program contains a statement.
+
+double z = pow(2, 3);
+
+When the pow function returns its result, the return value is stored in the variable z. If you want the
+value to be displayed, you need to add a statement such as cout << z.
+
+At this point, you may wonder how the pow function performs its job. For example, how does
+pow(2, 3) compute that 2^3 is 8? By multiplying 2 x 2 x 2? With logarithms? Fortunately, as a user
+of the function, you don't need to know how to the function is implemented. You just need to know the 
+specification of the function: If you provide arguments x and y, the function returns x^y. Engineers use
+the term black box for a device with a given specification but unknown implementation. You can
+think of pow as a black box. (Definition of black box: A device with a given
+specification but unknown implementation)
+
+When you design your own functions, you will want to make them appear as black boxes to other
+programmers. Those programmers want to use your functions without knowing what goes on
+inside. Even if you are the only one person working on a program, kepeing each function into a black box 
+pays off. There are fewer details that you need to keep in mind.
+
+Although a thermostat is usually white, you can think of it as a black box. The input is the
+desired temperature, and the output is a signal to the heater or air conditioner.
+
