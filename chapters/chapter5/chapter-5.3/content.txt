@@ -1,0 +1,50 @@
+5.3 PARAMETER PASSING
+
+In this section, we examine the mechanism of passing arguments into functions. When a
+function is called, its parameter variables are created (Another commonly used term for a
+parameter variable, called the argument.) In the function call, an expression is supplied for
+each parameter variable, called the argument (Another commonly used term for this
+expression is actual parameter) Each parameter variable is initialized with the value of the
+corresponding argument. (Definition of parameter variable: A variable of a function that is
+initialized with a value when the function is called) (Definition of argument: A value
+supplied in a function call, or one of the values combined by an operator)
+
+double result1 = cube_volume(2);
+
+- The parameter variable side_length of the cube_volume function is created.
+- The parameter variable is initialized with the value of the argument that was passed
+in the call. In our case, side_length is set to 2.
+- The function computes the expression side_length * side_length * side_length,
+which has the value 8. That value is stored in the variable volume.
+- The function returns. All of its variables are removed. The return value is transferred
+to the caller, that is, the function calling the cube_volume function.
+
+Now consider what happens in a subsequent call, cube_volume(10). A new parameter
+variable is created. (Recall that the previous parameter variable was removed when the
+first call to cube_volume returned.) It is initialized with the argument 10, and the process
+repeats. After the second function call is complete, its variables are again removed.
+
+Like any other variables, parameter variables can only be set to values of compatible
+types. For example, the side_length parameter variable of the cube_volume function
+has type double. It is valid to call cube_volume(2.0) or cube_volume(2). In the
+latter call, the integer 2 is automatically converted to the double value 2.0. However,
+a call cube_volume("two") is not legal.
+
+PROGRAMMING TIP 5.3.1: DO NOT MODIFY PARAMETER VARIABLES.
+
+In C++, a parameter variable is just like any other variable. You can modify the values of
+the parameter variables in the body of a function. For eaxmple,
+
+int total_cents(int dollars, int cents) {
+    cents = dollars * 100 + cents; // Modifies parameter variable
+    return cents;
+}
+
+However, many programmers find this practice confusing. It mixes the concept of a
+parameter (input to the function) with that of a variable (storage for a value). To avoid
+the confusion, simply introduction a separate variable.
+
+int total_cents(int dollars, int cents) {
+    int result = dollars * 100 + cents;
+    return result;
+}
