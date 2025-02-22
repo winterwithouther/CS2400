@@ -1,0 +1,57 @@
+5.5 SPECIAL TOPIC: FUNCTION DECLARATIONS
+
+It is a compile-time error to call a function that the compiler does not know, just as it is an
+error to use an undefined variable. You can avoid this error if you define all functions
+before they are first used. First define lower-level helper functions, then the mid-level
+workhorse functions, and finally main in your program.
+
+Some programmers prefer to list the main function first in their programs. If you share
+that preference, you need to learn how to declare the other functions at the top of the
+program. A declaration of a function lists the return type, function name, and parameter
+variables, but it contains no body. (Definition of declaration: A statement that announces
+the existence of a variable, function, or class but does not define it.)
+
+double cube_volume(double side_length);
+
+This is an advertisement that promises that the function is implemented elsewhere. It is
+easy to distinguish declarations from definitions: Declarations end in a semi-colon,
+whereas definitions are followed by a {...} block. Declarations are also called 
+prototypes. (Definition of prototype: The declaration of a function, including its parameter
+types and return type.)
+
+In a function prototype, the names of the parameters are optional. You could also write
+
+double cube_volume(double);
+
+However, it is a good idea to include parameter names in order to document the purpose
+of each parameter.
+
+The declarations of common functions such as pow are contained in header files. If you
+have a look inside <cmath>, you will find the declaration of pow and the other math
+functions. 
+
+Here is an alternate organization of the cube.cpp file:
+
+#include <iostream>
+
+using namespace std;
+
+// Declaration of cube_volume
+double cube_volume(double side_length);
+
+int main() {
+    double result1 = cube_volume(2); // Use of cube_volume
+    double result2 = cube_volume(10);
+    cout << "A cube with side length 2 has volume " << result1 << endl;
+    cout << "A cube with side length 10 has volume " << result2 << endl;
+    return 0;
+}
+
+// Definition of cube_volume
+double cube_volume(double side_length) {
+    return side_length * side_length * side_length;
+}
+
+If you prefer this approach, go ahead and use it in your programs. You just need to be
+aware of one drawback. Whenever you change the name of a function or one of the
+parameter types, you need to fix it in both places: in the declaration and in the definition.
