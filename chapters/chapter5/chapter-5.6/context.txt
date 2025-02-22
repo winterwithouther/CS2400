@@ -1,0 +1,88 @@
+5.6 HOW TO: IMPLEMENTING A FUNCTION
+
+A function is a computation that can be used multiple times with different parameters,
+either in the same program or in different programs. Whenever a computation is needed
+more than once, turn it into a function.
+
+Problem statement: To illustrate this process, suppose that you are helping
+archaeologists who research Egyptian pyramids. You have taken on the task of writing a
+function that determines the volume of a pyramid, given its height and base length.
+
+Step 1: Describe what the function should do.
+
+Provide a simple English description, such as "Compute the volume of a pyramid whose
+base is a square"
+
+Step 2: Determine the function's inputs
+
+Make a list of all the parameters that can vary. It is common
+for beginners to implement that are overly specific. For example,
+you may know that the great pyramid of Giza, the largest of the Egyptian
+pyramids, has a height of 146 meters and a base length of 230 meters. You should
+not use these numbers in your calculation, even if the origin problem only asked about 
+the great pyramid. It is just as easy -- and far more useful to write a function that
+computes the volume of any pyramid.
+
+In our case, the parameters are the pyramid's height and base length. At this point, we
+have enough information to document the function:
+
+/ **
+    Computes the volume of a pyramid whose base is a square.
+    @param height: the height of the pyramid
+    @param base_length: the length of one side of the pyramid's base
+    @return the volume of the pyramid
+*/
+
+Step 3: Determine the types of the parameter variables and the return value
+
+The height and base length can both be floating-points numbers. Therefore, we will choose
+the type double for both parameter variables. The computed volume is also a floating-point
+number, yielding a return type of double. Therefore, the function will be defined as 
+
+double pyramid_volume(double height, double base_length);
+
+Step 4: Write psuedocode for obtaining the desired result.
+
+In most cases, a function needs to carry out several steps to find the desired answer. You
+may need to use mathematical formulas, branches, or loops. Express your function in
+psuedocode.
+
+An internet search yields the fact that the volume of a pyramid is computed as
+
+volume = 1/3 x height x base area
+
+since the base is a square, we have
+
+base area = base length x base length
+
+using these two equations, we can compute the volume from the parameter variables/
+
+Step 5: Implement the function body.
+
+In our example, the function body is quite simple. Note the use of the return statement
+to return the result
+
+Step 6: Test your function
+
+After implementing a function, you should test it in isolation. Such a test is called a unit
+test. Work out test cases by hand, and make sure that the function produces the correct
+results. For example, for a pyramid with height 9 and base length 10, we expect the area to
+be 1/3 * 9 * 100 = 300. If the height is 0, we expect an area of 0. (Definition of unit test: A
+test of a function by itself, isolated from the remainder of the program)
+
+int main()
+{
+   cout << "Volume: " << pyramid_volume(9, 10) << endl;
+   cout << "Expected: 300" << endl;
+   cout << "Volume: " << pyramid_volume(0, 10) << endl;
+   cout << "Expected: 0";
+   return 0;
+}
+
+The output confirms that the function worked as expected:
+
+Volume: 300
+Expected: 300
+Volume: 0
+Expected: 0
+The following program calculates a pyramid’s volume.
