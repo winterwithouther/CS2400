@@ -1,0 +1,53 @@
+5.4 RETURN VALUES
+
+You use the return statement to specify the result of a function. When the return
+statement is processed, the function exits immediately. This behavior is convenient for
+handling exceptional cases at the beginning:
+
+double cube_volume(double side_length) {
+    if (side_length < 0) { return 0; }
+    double volume = side_length * side_length * side_length;
+    return volume;
+}
+
+If the function is called with a negative value for side_length, then the function returns
+0 and the remainder of the function is not executed.
+
+In the preceding example, each return statement returned a constant or a variable.
+Actually, the return statement can return the value of any expression. Instead of saving
+that return value in a variable and returning the variable, it is often possible to eliminate the
+variable and return a more complex expression:
+
+double cube_volume(double side_length) {
+    return side_length * side_length * side_length;
+}
+
+It is important that every branch of a function return a value. Consider the following
+incorrect function:
+
+double cube_volume(double side_length) {
+    if (side_length >= 0) {
+        return side_length * side_length * side_length;
+    }
+}
+
+Suppose you call cube_volume with a negative value for the side length. Of course, you
+aren't supposed to call that, but it might happen as the result of a coding error. Because
+the if condition is not true, the return statement is not executed. However, the function
+must return something. Depending on the circumstances, the compiler might flag this as
+an error, or the function might return a random value. Protect against this problem by 
+returning some safe value:
+
+double cube_volume(double side_length) {
+    if (side_length > 0) {
+        return side_length * side_length * side_length;
+    }
+    return 0;
+}
+
+The last statement of every function ought to be a return statement. This ensures
+that some value gets returned when the function reaches the end.
+
+Here is another implementation of the earthquake program that you saw in Section 3.8.
+Note that the get_description function has multiple return statements.
+
