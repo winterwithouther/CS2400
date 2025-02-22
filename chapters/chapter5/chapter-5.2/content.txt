@@ -1,0 +1,88 @@
+In this section, you will learn how to implment a function from a given specification.
+We will use a very simple example: a function to compute the volume of a cube with a given
+side length.
+
+When writing this function, you need to
+- pick a name for the function (cube_volume)
+- declare a variable for each argument (double side_length). These variables are
+called parameter variables (Defintion of parameter variable: A variable of a function
+that is initialized with a value when the function is called)
+- specify the type of the return value (double).
+
+Put all this information together to form the first line of the functions definition:
+
+double cube_volume(double side_length)
+
+Next, specify the body of the function: the statements that are executed when the function
+is called. (Definition of body: All statements of a function or block)
+
+The volume of a cube of side length s is s x s x s. However, for greater clarity, our
+parameter variable has been called side_length, not s, so we need to compute
+side_length * side_length * side_length.
+
+We will store this value in a variable called volume:
+
+double volume = side_length * side_length * side_length;
+
+in order to return the result of the function, use the return statement:
+
+return volume;
+
+the body of a function is enclosed in braces. Here is the complete function:
+
+double cube_volume(double side_length) {
+    double volume = side_length * side_length * side_length;
+    return volume;
+}
+
+Let's put this function to use. We'll supply a main function that calls
+the cube_volume function twice.
+
+int main() {
+    double result1 = cube_volume(2);
+    double result2 = cube_volume(10);
+    cout << "A cube with side length 2 has volume " << result1 << endl;
+    cout << "A cube with side length 10 has volume " << result2 << endl;
+
+    return 0;
+}
+
+When the function is called with different arguments, the function returns different results.
+Consider the call cube_volume(2). The argument 2 corresponds to the side_length
+parameter variable. Therefore, in this call, side_length is 2. The function computes
+side_length * side_length * side_length, or 2 * 2 * 2. When the function
+is called with a different argument, say 10, then the function computes 10 * 10 * 10.
+
+Now we combine both functions into a test program. Because main calls cube_volume,
+the cube_volume function must be known before the main function is defined. This is
+easily achieved by placing cube_volume first and main last in the source file (See
+special Topic 5.5 for an alternative.)
+
+Here is the complete program. Note the comment that describes the behavior of the function.
+
+#include <iostream>
+
+using namespace std;
+
+double cube_volume(double side_length) {
+    double volume = side_length * side_length * side_length;
+    return volume;
+}
+
+int main() {
+    double result1 = cube_volume(2);
+    double result2 = cube_volume(10);
+    cout << "A cube with side length 2 has volume " << result1 << endl;
+    cout << "A cube with side length 10 has volume " << result2 << endl;
+
+    return 0;
+}
+
+PROGRAMMING TIP 5.2.1 FUNCTION COMMENTS
+
+Whenever you write a function, you should comment its behavior. Comments are for
+human readers, not compilers, and there is no universal standard for the layout of a
+function comment. In this book, we will use the following layout.
+
+This particular documentation style is borrowed from the Java programming language.
+It is widely supported by C++ tools as well, for example by the Doxygen tool.
