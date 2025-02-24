@@ -1,0 +1,89 @@
+5.9 FUNCTIONS WITHOUT RETURN VALUES
+
+Sometimes, you need to carry out a sequence of instructions that does not yeild a value.
+If that instruction sequence occurs multiple times, you will want to package it into a function.
+In C++, you use the return type void to indicate the absence of a return value.
+
+Here is a typical example. Your task is to print a string in a box, like this:
+
+-------
+!Hello!
+-------
+
+However, different strings can be subsituted for Hello. A function this task can be
+declared as follows
+
+void box_string(string str)
+
+Now you develop the body of the function in the usual way,
+by formulating a general method for solving the task.
+
+n = the length of the string
+print a line that contains the - character n + 2 times.
+print a line containing the string, surrounding with a! to the left and right.
+print another line containing the - character n + 2 times.
+
+Here is the function implementation
+
+/**
+    Prints a string in a box
+    @param str the string to print
+*/
+
+void box_string(string str) {
+    int n = str.length();
+    for (int i = 0; i < n + 2; i++) {
+        cout << "-";
+    }
+    cout << endl;
+    cout << "!" << str << "!" endl;
+    for (int i = 0; i < n + 2; i++) { cout << "-"; }
+    cout << endl;
+}
+
+This function doesn't compute any value. it performs some actions and then returns to the
+caller. Note that there is no need for a return statement
+
+Because there is no return value, you cannot use box_string in an expression. You can
+call. Note that there is no need for a return statement.
+
+Because there is no return value, you cannot use box_string in an expression. You can call
+
+box_string("Hello");
+
+but not
+
+result = box_string("Hello"); // Error: box_string doesn't return a result.
+
+If you want to return from a void function befor reaching the end, you use a return
+statement without a value. For example,
+
+void box_string(string str) {
+    int n = str.length();
+    if (n == 0) {
+        return; // Return immediately
+    }
+}
+
+Here is a program that demonstrates the box_string function
+
+#include <iostream>
+
+using namespace std;
+
+/*
+    Prints a string in a box.
+    @param conents the string to print in a box
+*/
+
+void box_string(string contents) {
+    int n = conents.length();
+    // Print the top row
+    for (int i = 0; i < n + 2; i++) { cout << "-"; }
+    cout << endl;
+    cout << "!" << contents << "!" << endl;
+    // Prints the bottom row
+    for (int i = 0; i < n + 2; i++) } { cout << "-"; }
+    cout << endl;
+}
+
