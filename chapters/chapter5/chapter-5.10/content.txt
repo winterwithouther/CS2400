@@ -1,0 +1,85 @@
+5.10 PROBLEM SOVLING: REUSABLE FUNCTIONS
+
+You have used many functions from the C++ standard library. These functions have been
+provided as a part of standard C++ so that programmers need not recreate them. Of
+course, the C++ library doesn't cover every conceivable need. You will often be able to save
+yourself time by designing your own functions that can be used for multiple problems.
+
+When you write nearly identical code or psuedocode multiple times, either in the same
+program or in separate programs, consider introducting a function. Here is a typical
+example of code replication:
+
+int hours;
+do {
+    cout << "Enter a value between 0 and 23: ";
+    cin >> hours;
+} while (hours < 0 || hours > 23);
+
+int minutes;
+do {
+    cout << "Enter a value between 0 and 59: ";
+    cin >> minutes;
+} while (minutes < 0 || minutes > 59);
+
+This program segment reads two variables, making sure that each of them is within a
+certain range. It is easy to extract the common behavior into a function:
+
+/*
+    Prompts a user to enter a value up to a given maximum until the user
+    provides a valid input.
+    @param high the largest allowable input
+    @return the value provided by the user (between 0 and high, inclusive)
+*/
+
+int read_int_up_to(int high) {
+    int input;
+    do {
+        cout << "Enter a value between 0 and " << high << ": ";
+        cin >> input;
+    } while (input < 0 || input > high);
+    return input;
+}
+
+Then user the function twice:
+
+int hours = read_int_up_to(23);
+int minutes = read_int_up_to(59);
+
+We have now removed the replication of the loop -- it only occurs once, inside the function.
+When carrying out the same task multiple times, use a function.
+
+Note that the function can be reused in other programs that need to read their integer values.'
+However, we should consider the possibility that the smallest value need not always be
+zero.
+
+Here is a better alternative:
+
+/*
+    Prompts a user to enter a value within a given range until the user
+    provides a valid input
+    @param low the smallest allowable input
+    @param high the largest allowable input
+    @return the value provided by the user (between low and high, inclusive)
+*/
+
+int read_int_between(int low, int high) {
+    int input;
+    do {
+        cout << "Enter a value between " << low << " and " << high << ": ";
+        cin >> input; 
+    } while (input < low || input > high);
+    return input;
+}
+
+In our program, we call
+
+int hours = read_int_between(0, 23);
+
+Another program we can call
+
+int month = read_int_between(1, 12);
+
+In general, you will want to provide parameter variables, for the values that vary when a
+function is reused.
+
+The following program demonstrates the read_int_between function
