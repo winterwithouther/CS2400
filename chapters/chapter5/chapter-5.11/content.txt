@@ -1,0 +1,193 @@
+One of the most powerful strategies for problem solving is the process of stepwise
+refinement. To solve a difficult task, break it down into simpler tasks. Then keep breaking 
+down the simpler tasks into even simpler ones, until you are left with tasks that you know how to
+solve. (Definition of stepwise refinement: The process of solving a problem that
+starts out with a subdivision into steps, then continues by further subdividing those
+steps.)
+
+Here is an application of this process to a problem of everyday life. You get up in the
+morning and simply must get coffee. How do you get coffee? You see whether you
+can get someone else, such as your mother or mate, to bring you some. If that fails, you must
+make coffee. How do you make coffee? If there is an instant coffee. How do you boil water?
+If there is a microwave, then you will a cup with water, place it in the microwave and heat it 
+on the stove until the water comes to a boil. On the other hand, If you don't have instant coffee,
+you must brew coffee. How do you brew coffee? You add water to the coffee maker,
+put it in the filter, grind coffee, put the coffee in the filter, and turn the coffee
+maker on. How do you grind coffee? You add coffee beans to the coffee grinder and push the button 
+for 60 seconds.
+
+Let us apply the process of stepwise refinement to a programming problem.
+
+When pringing a check, it is customary to write the check amou nt both as a number
+(“$274.15”) and as a text string ("two hundred seventy four dollars and 15 cents"). Doing so
+reduces the recipient's temptation to add a few digits in front of the amount.
+
+For a human, this isn't particularly difficult, but how can a computer do this?
+There is no built in function that turns 274 into "two hundred seventy four". We need to program this
+function. Here is the description of the function we want to write.
+
+/*
+    Turns a number into English name
+    @param number a positive integer < 1000
+    @return the name of number (eg. "two hundred seventy four")
+*/
+
+string int_name(int number)
+
+How can this function do its job? Let's look at this simple case first. If the
+number is between 1 and 9, we need to compute "one" ... "nine". In fact, we need the same
+computation again for the hundreds (two hundred). Using the stepwise decomposition process,
+we design another function for this simpler task. Again, rather than implementing the function, we
+first write the comment:
+
+/**
+    Turns a digit into its English name.
+    @param digit an integer between 1 and 9
+    @return the name of digit ("one" ... "nine")
+*/
+string digit_name(int digit)
+
+This sounds simple enough to implement, using an if statement with nine
+branches. No further functions should be required for completed the 
+digit_name function, so we will worry about the implementation later.
+
+Numbers between 10 and 19 are special cases. Let's have a seperate function
+teen_name that converts them into strings "eleven", "twelve", "thirteen" and so on:
+
+/*
+    Turns a number between 10 and 19 into its English name.
+    @param number an integer between 10 and 19.
+    @return the name of its number ("ten" ... "nineteen")
+*/
+string teen_name(int number)
+
+Next, we suppose that the number between 20 and 99. Then we show the tens
+as "twenty", "thirty" ... "ninety". For simplicity and consistency, put that 
+computation into a separate function:
+
+/**
+    Gives the name of the tens part of a number between 20 and 99.
+    @param number an integer between 20 and 99
+    @return the name of the tens part of the number ("twenty" ... "ninety")
+*/
+string tens_name(int number)
+
+Next suppose the number is at least 20 and at most 99. If the number is
+even divisible by 10, we use the tens_name, and we are done. Otherwise, we
+print the tens with tens_name and the ones with digit_name. If the
+number is between 100 and 999, then we show a digit, the word "hundred", and the
+remainder as described previously.
+
+Here is th e psuedocode of the algorithm:
+
+int_name(number)
+part = number // The part that still needs to be converted
+name = ""
+
+if part >= 100
+    name = name of hundreds in part + " hundred"
+    Remove hundreds from part.
+
+if part >= 20
+    Append tens_name(part) to name
+    Remove tens from part
+else if part >= 10
+    Append teen_name(part) to name.
+    part = 0
+
+if part > 0
+    append digit_name(part) to name
+
+The psuedocode has a number of important improvements over the verbal
+description. It shows how to arrange the tests, starting with the comparisons
+against the larger numbers, and it shows how the smaller number is
+subsequently processed in further if statements.
+
+On the other hand, this psuedocode is vague about the actual conversion of
+the pieces, just referring to "name of hundreds" and the like. Furthermore, we
+were vague about spaces. As it stands, the code would produce strings withe
+no spaces, twohundredseventyfour, for example. Compared to the
+complexity of the main problem, one would hope that spaces are a minor
+issue. It is best not to muddy the psuedocode with minor details.
+
+Now turn the psuedocode into real code. The last three cases are easy,
+because helper functions are already developed for them:
+
+if (part >= 20) {
+    name = name + " " + tens_name(part);
+    part = part % 10;
+}
+else if (part >= 10) {
+    name = name + " " + teen_name(part);
+    part = 0;
+}
+if (part > 0) {
+    name = name + " " + digit_name(part);
+}
+
+Finally, let us tackle the case of numbers between 100 and 999. Because
+part < 1000, part / 100 is a single digit, and we obtain its name by
+calling digit_name. Then we add the "hundred" suffix.
+
+PROGRAMMING TIP 5.11.2: TRACING FUNCTIONS
+
+When you design a complex set of functions, it is a good idea to carry out
+a manual walkthrough before entrusting your program to the computer.
+(Definition of walkthrough: A step-by-step manual simulation of a computer program)
+
+Take an index card, or some other piece of paper, and write down the
+function call that you want to study. Write the name of the function and the
+names and values of the parameter variables, like this:
+
+Then write the names of the initial values of the function variable. Write
+them in a table, since you will update them as you walk through the code.
+
+We enter the test part part >= 100. part / 100 is 4 and part % 100 is 16.
+digit_name(4) is easily seen to be "four". (Had digit_name been complicated, you would have
+started another sheet of paper to figure out that function call. It is quite common to
+accumulate several sheetes in this way.)
+
+Now name has changed to
+name + " " + digit_name(part / 100) + " hundred", that is "four hundred",
+and part has changed to part % 100, or 16.
+
+Now you enter the branch part >= 10. teen_name(16) is sixteen,
+so the variablels now have the values.
+
+Now it becomes clear why you need to set part to 0 in line 87. Otherwise,
+you would enter the next branch and the result would be "four hundred sixteen six"
+Tracing the code is an effective way to understand the
+subtle aspects of a function.
+
+PROGRAMMING TIP 5.11.3 STUBS
+
+When writing a larger program, it is not always feasible to implement and
+test all functions at once. You often need to test a function that calls
+another, but the other function hasn't yet been implemented. Then you can
+temporarily replace the missing function with a stub. A stub is a function
+that returns a simple value that is sufficient for testing another function.
+Here are examples of a stub functions: (Definition of stub: A function with no
+or minimal functionality.)
+
+/*
+    Turns a digit into its English name
+    @param digit an integer between 1 and 9
+    @return the name of digit ("one" ... "nine")
+*/
+
+string digit_name(int digit) {
+    return "mumble";
+}
+
+/*
+    Gives the name of the tens part of a number between 20 and 99.
+    @param number an integer between 20 and 99.
+    @return the tens of the number ("twenty" ... "ninety")
+*/
+string tens_name(int number) {
+    return "mumblety";
+}
+If you comebine these stubs with the int_name function and test it with an
+argument of 274, you will get a result of "mumble hundred mumblety
+mumble", which indicates that the basic logic of the int_name function is
+working correctly.
