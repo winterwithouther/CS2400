@@ -1,0 +1,252 @@
+6.1 READING AND WRITING TEXT FILES
+
+Chapter goals 6.1.1
+
+- To be able to read and write files
+- To convert between strings and numbers using string streams
+- To process command line arguments
+- To understand the concepts of sequential and random access
+
+In this chapter, you will learn how to read and write files using the C++
+stream library-a very useful skill for processing real world data. As an application,
+you will learn how to encrypt data. (The engima machine shown in the photo is an 
+encryption device used by Germany in World War 2. Pioneering British computer scientists
+broke the code and were able to intercept encoded messages, which was a
+significant help in winning the war.) Later in the chapter, you will learn how
+to process binary files, such as those that store image data.
+
+Data arrive in an input stream just like items on a conveyor belt, one at time.
+
+The C++ input/output library is based on the concept of
+streams. An input stream is a source of data, and an output
+stream is a destination for data. THe most common sources
+and destinations for data are the files on your hard disk.
+(Definition of stream: An abstraction for a sequence of bytes
+from which data can be read or to which data can be written.)
+(Definition of input stream: An abstraction for a sequence of
+bytes from which data can be read.)(Definition of output stream:
+An abstraction for a sequence of bytes to which data can be written)
+
+To access a file, you use a file stream. There are three types of
+file streams: ifstream (for input), ofstream (for output), and 
+fstream (for both input and output). Include the <fstream> 
+header when you use any of these file streams.
+
+In the following sections, you will learn how to process data
+from files. File processing is a very useful skill in many 
+disciplines because it is exceedingly common to analyze large
+data sets stored in files.
+
+OPENING A stream
+
+To read anything from a file stream, you need to open it. When 
+you open a stream, you give the name of the file stored on disk.
+Suppose you want to read data from a file named input.dat,
+located in the same directory as the program. Then you use the 
+following function call to open the file:
+
+in_file.open("input.dat");
+
+This statement associates the variable in_file with the file
+named input.dat
+
+Note that all streams are objects, and you use the dot nation
+for calling functions that manipulate them.
+
+To open a file for writing, you use an ofstream variable. To
+open the same file for both reading and writing, you use an
+fstream variable.
+
+File names can contain directory path information, such as
+
+~/homework/input.dat (UNIX)
+c:\homework\input.dat (windows)
+
+When you specify the file name as a string literal, and the name
+contains backslash characters (as in Windows filename), you
+must supply each backslash twice.
+
+in_file.open("c:\\homework\\input.dat");
+
+Recall that a single backslash inside a string literal is an escape
+character that is combined with another character to form a
+special meaning, such as \n for a newline character. The \\
+combination denotes a single backslash. (Defintiion of escape character:
+A character in text that is not taken literally but has a special meaning
+when combined with the character or characters that follow it. The\ \ character is
+an escape character in C++ strings.)
+
+In older versions of C++, you must be careful when opening a
+file with a name that is stored in a string variable. Use the
+c_str function to convert the C++ string to a C string:
+
+cout << "Please enter the file name:";
+string filename;
+cin >> filename;
+ifstream in_file;
+in_file.open(filename.c_str()); // Before C++ 11
+
+If it is not possible to open a stream,, then the stream variable is
+set to a failed state. You can test for that condition
+
+in_file.open("input.dat");
+if (infile.fail()) {
+    cout << "Cannot read from input.dat" << endl;
+} else {
+    read input;
+}
+
+When the program ends, all streams that you have opened will
+be automatically closed. You can also manually close a stream
+with the close member function.
+
+in_file.close();
+
+Manual closing is only necessary if you want to use the stream
+variable again to process another file.
+
+READING FROM A FILE
+
+Reading data from a file stream is completely straightforward:
+You simply use the same functions that you have always used
+for reading from cin:
+
+stirng name;
+double value;
+in_file >> name >> value;
+
+THe fail function tells you whether input has failed. You have
+already used this function with cin, to check the errors in
+console input. File streams behave the same way. When you
+try to read a number from a file, and the next data item is not a
+properly formatted number, then the stream fails. After reading
+data, you should test for success before processing:
+
+if (!in_file.fail()) {
+    process input;
+}
+
+When you read input from a file, number format errors are not
+the only reason for failure. Suppose you have consumed all of
+the data contained in a file and try to read more items. A file
+stream enters the failed state, whereas cin would just wait for 
+more use input. Moreover, if you open a file and the name is
+invalid, or if there is no file of that name, then the file stream
+is also in a failed state. It is a good idea to test for failure
+immediately after calling open.
+
+WRITING TO A FILE
+
+In order to write to a file, you define an ofstream or fstream
+variable and open it. Then you send information to the output
+file, using the same operations that you used with cout:
+
+ofstream out_file;
+out_file.open("output.txt");
+out_file << name << " " << value << endl;
+
+A FILE PROCESSING EXAMPLE
+
+Here is a typical example of processing data in a file. The Social
+Security Admininistration publishese lists of the most popular baby names
+on their website.
+If you query the 1,000 most popular names for a given decade, the browser displays
+the result on the screen.
+
+TO save the data as text, simply select it and paste the result
+into a file. This book's companion code contains a file called
+babynames.txt with the data for the 1990s
+
+Each line in the file contains seven entries:
+
+- the rank (from 1 to 1,000)
+- the name, frequency, and percentage of the male name
+of that rank
+- the name, frequency, and percentage of the female name
+of that rank 
+
+For example, the line
+
+10 Joseph 260365 1.2681 Megan 160312 0.8168
+
+shows that the 10th most common boy's name was Joseph,
+with 260,365 births, or 1.2681 percent of all births during that
+period. The 10th most common girl's name was Megan. Why
+are there many more Josephs than Megans? Parents seem to
+use a wider set of girl's names, making eaach one of them less frequent.
+
+Let us test that conjecture, by determining the names given to
+the top 50 percent of boys and girls in the list.
+
+To process each line, we first read the rank:
+
+int rank;
+in_file >> rank;
+
+We then read a set of three values for the boy's name:
+
+string name;
+int count;
+double percent;
+in_file >> name >> count >> percent;
+
+Then we repeat that step for girls. Because the actions are
+identical, we supply a helper function process_name for that
+purpose. To stop processing after reaching 50 percent, we can
+add up the frequencies and stop when they reach 50 percent.
+However, it turns out to be a bit simpler to initialize a total
+with 50 and subtract the frequencies. We need separate totals for
+boys and girls. When a total falls below 0, we stop printing.
+When both totals fall below 0, we stop reading.
+
+Note that the in_file parameter variable of the
+process_name function in the code below is a reference
+parameter. Reading or writing modifies a stream variable. The
+stream variable monitors how many characters have been read
+or written so far. Any read or write operation changes that data.
+For that reason, you must always make stream parameter
+variables reference parameters.
+
+The complete program is shown below. As you can see reading
+from a file is just as easy as reading keyboard input.
+
+Have a look at the program output. Remarkably, only 69 boy 
+names and 153 girl names account for half of all births. That's 
+good news fpr those who are in the business of producing 
+personalized doodads. Programming Project 6.16.3 asks you to
+study how this distribution has changed over the years.
+
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+/*
+    Reads name information, prints the name
+    if total >= 0, and adjusts the total.
+    @param in_file the input stream
+    @param totla the total percentage that should still be processed
+
+*/
+
+void process_name(ifstream &in_file. double &total) {
+}
+
+int main() {
+    ifstream in_file;
+    in_file.open("babynames.txt");
+    if (in_file.fail()) { return 0; } // Check for failure after opening
+    
+    double boy_total = 50;
+    double girl_total = 50;
+
+    while (boy_total > 0 || girl_total > 0) {
+        int rank;
+        in_file >> rank;
+        if ()
+    }
+}
+
+
+
