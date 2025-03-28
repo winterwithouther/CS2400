@@ -1,0 +1,67 @@
+6.3 SPECIAL TOPIC: STREAM FAILURE CHECKING
+
+Given a stream variable, for example,
+
+istream in_file;
+
+you know that you can use fail member function to check 
+whether the stream has failed:
+
+if (in_file.fail()) {
+    report error.
+} else {
+    process input.
+}
+
+Alternatively, you can use the stream variable itself as a
+condition. The C++ compuler converts the stream to a bool
+value that is true if the stream has not failed, and false if it
+has failed. Therefore, you can achieve the same effect with the 
+following statement:
+
+if (in_file) {
+    process input;
+} else {
+    report error
+}
+
+This alternative is particularly attractive with input operations
+that return a stream. In section 4.6 you saw that you can read a
+sequence of vlaues with the loop
+
+cout << "Enter values, Q to quit: ";
+int value;
+while (cin >> value) {
+    process value.
+}
+
+When the user enters a Q, or any other input that is not an
+integer, the stream state fails.
+
+You can chain the >> operators. Consider this example:
+
+whiel (in_file >> name >> value) {
+    process the name and value.
+}
+
+when evaluating the expression
+
+in_file >> name >> value;
+
+the subexpression in_file >> name executes first, and it
+returns in_file. Next, the expression in_file >> value
+executes and again returns in_file. The in_file object is then
+converted to a bool value and tested in the condition.
+
+As you saw in Section 6.2, you can also use expressions
+
+in_file.get(ch)
+
+and 
+
+getline(in_file, line)
+
+as consitions. This works for the same reason. The get and
+getline function return the input stream, and it is converted 
+to a bool value.
+
