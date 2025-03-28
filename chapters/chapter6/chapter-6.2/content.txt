@@ -1,0 +1,173 @@
+6.2 READING INPUT TEXT
+
+In the following sections, you will learn how to process text with
+complex contents such as that which often occurs in real=life
+situations.
+
+READING WORDS
+
+You already know how to read the nxt word from a stream,
+using the >> operator
+
+string word;
+in_file >> word;
+
+Here is precisely what happens when that operation is
+executed. First, any input characters that are white spaces are
+removed from the stream, but they are not added to the word.
+White space includes spaces, tab characters, and the newline 
+characters that are separate lines. The first character that is not
+white space become the first character in the string word.
+More characters are added until either another white space
+character occurs, or the end of the file has been reached. 
+The white space after the word is not removed from the stream.
+
+READING CHARACTERS
+
+Instead of reading an entire word, you can read one character
+at a time by calling the get function:
+
+char ch;
+in_file.get(ch);
+
+The get function returns the "not failed" condition. THe
+following loop processes all characters in file:
+
+while (in_file.get(ch)) {
+    process the character ch;
+}
+
+The get function reads white space characters. This is useful if
+you need to process characters such as spaces, tabs, or
+newlines. On the other hand, if you are not interested in white
+space, use the >> operator instead.
+
+in_file >> ch; // ch is set to the next non-white space
+character
+
+If you read a character and you regretted it, you can unget it, so
+that the next input operation can read it again. However, you
+can unget only the last character. This is called one-character
+lookahead. You get a chance to look at the next character in the
+input stream, and you can make a decision whether you want to
+consume it or put it back.
+
+A typical situation for lookahead is to look for numbers:
+
+char ch;
+in_file.get(ch);
+if (isdigit(ch)) {
+    in_File.get(); // Put the digit back so that it is part of the number
+    of the number
+    int n;
+    in_file >> n; // Read integer starting with ch
+}
+
+If you read a character from a stream and you don't like
+what you get, you can unget it
+
+The isdigit function is one of the several useful functions that
+categorize characters. All return true or 
+false as to whether the argument passes the test. You must
+include the <cctype> header to use these functions.
+
+READING LINES
+
+When each line of a file is a data record, it is often best to read
+entire lines with the getline function:
+
+string line;
+getline(in_file, line);
+
+The next input line (without the newline character) is placed
+into the string line.
+
+The getline function returns "not failed" condition. You
+can use the following loop to process each line in a file:
+
+while (getline(in_file, line)) {
+    process line
+}
+
+Note that getline is not a member function, but an ordinary
+function that is not called with the dot notation.
+
+Here is a typical example of processing line in a file. A file with
+population data from the CIA World Facebook site
+contains lines such as the following:
+
+China 1330044605
+India 1147995898
+United States 303824646
+
+Because each line is a data record, it is natural to use the
+getline function for reading lines into a string variable. To
+extract the data from that string, you need to find out where the
+name ends and the number starts.
+
+Locate the first digit
+
+int i = 0;
+while (!isdigit(line[i])) { i++; }
+
+Then go backward and skip white space;
+
+int j = i - 1;
+while (isspace(line[j])) { j--; }
+
+Finally, extract the country name and population:
+
+string country_name = line.substr(0, j + 1);
+string population = line.substr(i);
+
+There is just one problem. The population is stored in a string,
+not a number. You will see in
+
+COMMON ERROR 6.2.1: MIXING >> AND GETLINE INPUT
+
+It is tricky to mix >> and getline input. Suppose we place
+country names and populations on separate lines.
+
+Now we can use getline to reach each country name
+without worrying about spaces:
+
+getline(in, country_name);
+in >> population
+
+The getline function reads an entire line of input,
+including the newline character at the end of the line. It
+places all characters except for that newline character into
+the string country_name. The >> operator reads all white space
+(that is, spaces, tabs, and newlines) until it reaches a
+number. THen it reads only the charactres in that number. It 
+does not consume the character following the number,
+typically a new line. This is a problem when a call to
+getline immediately follws a call to >>. Then the call to
+getline reads only the newline, considering it as the end
+of an empty line.
+
+Perhaps an example will make this clearer. Consider the first
+input lines of the product
+
+descriptions. Calling getline consumes the darker-colored characters
+
+After the call to getline, the first line has been read
+completely, including the newline at the end. Next, the call to
+in >> population reads the digits.
+
+After the call to in >> population, the digits of the
+number have been read, but the newline is still unread, 
+because the >> operator never reads any more characters
+than absolutely necessary. Now we have a problem. The
+next call to getline reads a blank line.
+
+This is a problem whenever an input with the >> operator is
+followed by a call to getline. The intention, of course, is to
+skip the rest of the current line and have getline read the
+next line. This purpose is achieved by the following 
+statements, which must be inserted after the last call to the
+>> operator.
+
+string remainder;
+getline(in, remainder);
+// Now you are ready to call getline again
