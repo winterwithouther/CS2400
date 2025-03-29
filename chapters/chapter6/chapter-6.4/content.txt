@@ -1,0 +1,61 @@
+6.4 WRITING TEXT OUTPUT
+
+You use the << operator to send strings and numbers to a
+stream. To write a single character to a stream, use
+
+out_file.put(ch);
+
+To control how the output is formatted, you use stream
+manipulators. A manipulator is a vlue that affects the behavior
+of the stream. It is sent to a stream using the << operator. The
+setw manipulator, which you have already used, is a typical 
+example. The statement
+
+out_file << setw(10);
+
+does not cause any immediate output, but when the next item
+is written, it is padded with sufficient spaces so that the output
+spans ten characters. (If a value does not fit into the given
+width, it is not truncated.)
+
+A manipulator is like a control button on a sound mixer.
+It doesn't product an output, but it affects how the output looks.
+
+Occasionally, you need to pad number with leading zeroes, for
+example to print hours and minutes as 09:01. This is achieved
+with the setfill manipulator:
+
+out_file << setfill('0') << setw(2) << hours << ":" << setw(2) << minutes << setfill('');
+
+Now, a zero is used to pad the field. Afterward, the space is
+restored as the fill character.
+
+By default, the fill characters appear before the item:
+
+out_file << setw(10) << 123 << endl << setw(10) << 4567;
+
+produces 
+          123
+         4567
+
+The numbers line up to the right. That alignment works well for
+numbers, but not for strings. Usually, you want strings to line up
+at the left. You use the left and right manipulators to set
+the alightment. The following example uses left alightment for a string
+and then switches back to the right alighnment for a number:
+
+out_file << left << setw(10) << word << right << setw(10) << number;
+
+The default floating-point format displays as many digits as are
+specificed by the prevision (6 by default), switching to scientific
+notation for lage and small numbers. For example,
+
+out_file << 12.3456789 << " " << 123456789.0 << " " << 0.0000123456789;
+
+The fixed format prints all values with the same number of digits
+after the decimal point. In the fixed format, the same
+numbers are displayed as 
+
+use the fixed manipulator to select the format, and the
+setprecision manipulator to change the precision
+
