@@ -1,0 +1,146 @@
+8.1 STRUCTURES
+
+in C++, you use arrays or vectors to collect values of the same type. If you want to group
+values of different types together, you use a structured type instead. In the following
+sections, you willl earn how to define structured types and how to work with values of these
+types.
+
+Structured Types
+
+Consider a street address that is composed of a house number and a street name. A
+structure named StreetAddress can be defined to combine these two values into a
+single entity. (Defintion of structure: A construct for aggregating items of arbitary types
+into a single value.)
+
+In C++, we define a structure with the struct reserved
+word: 
+
+struct StreetAddress {
+	int house_number;
+	string street_name;
+};
+
+This defintion yields a new type, StreetAddress, that you can use for declaring variables.
+
+StreetAddress white_house;
+
+The variable white_house has two named parts, called members, house_number and
+street_name. You use the "dot notation" to access each member, like this:
+
+white_house.house_number = 1600;
+white_house.street_name = "Pennsylvania Avenue";
+
+STRUCTURE ASSIGNMENT AND COMPARISON
+
+You can use the = operator to assign one structure  value to another. All members are
+assigned simultaneously. For example, if we declare a structure value.
+
+StreetAddress destination;
+
+then the assignment
+
+destination = white_house;
+
+is equivalent to
+
+destination.house_number = white_house.house_number;
+destination.street_name = white_house.street_name;
+
+However you cannot compare two structures for equality. That is,
+
+If (destination == white_house) // Error
+
+is not legal. You need to compare each member separately:
+
+if (destination.house_number == white_house.house_number &&
+	destination.street_name == white_house.street_name) // OK
+	
+FUNCTIONS AND STRUCTURES
+
+Structures can be function arguments and return values. You simply specify the structure
+type as the parameter variable or return type, as you would with any other type.
+
+For example, the following function has a parameter variable of the type StreetAddress
+
+void print_address(StreetAddress address) {
+	coud << address.house_number << " " << address.street_name;
+};
+
+A function can return a structure. For example, the following function returns a random
+address on Main Street:
+
+StreetAddress make_address() {
+	StreetAddress result;
+	result.house_number = 100 + rand() % 100;
+	result.street_name = "Main Street";
+	return result;
+}
+
+ARRAYS OF STRUCTURES
+
+If you need to collect many addresses, you can put them into an array. For example, here is
+a variable delivery_route that is an array of street addresses.
+
+StreetAddress delivery_route[ROUTE_LENGTH];
+
+To access a member of the structure, you first access the element in the array with the
+bracket operator, and then use the dot operator
+
+delivery_route[0].house_number = 123;
+delivery_route[0].street_name = "Main Street";
+
+You can also access a structure value in its entirety like this:
+
+StreetAddress start = devliery_route[0];
+
+Of course, you can also form vectors of structures:
+
+vector<StreetAddress> tour_destinations;
+tour_destinations.push_back(white_house);
+
+STUCTURES WITH ARRAY MEMBERS
+
+Structure members can contain arrays. For example, here is a structure that describes
+monthly temperatures at a given location. The temperature values are stored in an array.
+
+struct MonthlyTemperatures {
+	string location;
+	double values[12];
+};
+
+To access an array element, you first select the array member with the dot nation, then
+use brackets:
+
+MonthlyTemperatures death_valley_noon;
+death_valley_noon.values[2] = 82;
+
+NESTED STRUCTURES
+
+A structure can have a member that is another structure. For example, a person has a name
+and a street address. Because we already have a structure that describes street addresses,
+we can use it inside a Person structure.
+
+struct Person {
+	string name;
+	StreetAddress work_address;
+};
+
+You can access the nested member in its entirety, like this:
+
+Person theodore;
+theodore.work_address = white_house;
+
+Alternatively, if you want to select a member of a member, use the dot operator twice:
+
+theodore.work_address.street_name = "Pennsylvania Avenue";
+
+A structure can have multiple members that are structures. For example, Person can also
+have a home address that again has type StreetAddress
+
+struct Person {
+	string name;
+	StreetAddress home_address;
+	StreetAddress work_address;
+};
+
+

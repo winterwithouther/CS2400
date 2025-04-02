@@ -1,0 +1,74 @@
+8.2 OBJECT-ORIENTATED PROGRAMMING
+
+Chapter goals 8.2.1
+- To understand the concept of encapsulation
+- To master the separation of interface and implementation
+- To be able to implement your own classes
+- To understand how constructors and member functions act on objects
+- To discover appropriate classes for solving progrmaming problems
+- To distribute a program over multiple source files 
+
+This chapter introduces you to object-orientated programming, an important technique for
+writing complex programs. In an object-orientated prgoram, you don't simply manipulate
+numbers and strings, but you work with objects that are meaningful for your application.
+Objects with the same behavior (such as the windmills in the photo) are grouped into
+classes. A programmer provides the desired behavior by specifying and implementing
+functions for these classes. In this chapter, you will learn how to discover, specify, and
+implement your own classes, and how to use them in your programs.
+
+A class describes a set of objects with the same behavior. For example, a Car
+class describes all passengar vehicles that have a certain capacity and shape.
+
+You have learned how to structure your programs by decomposing tasks into functions.
+This is an excellent practice, but experience shows that it does not go far enough. As
+programs get larger, it becomes increasingly difficult to maintain a large collection of
+functions.
+
+To overcome this problem, computer scientists invented object-orientated programming, a
+programming style in which tasks are solving by collaborating objects. Each object has its
+own set of data, together with a set of functions that can act upon the data. (These
+functions are called member functions). (Defintion of object-oriented programming:
+Designing a program by discovering objects, their properties, and their relationships)
+(Defintion of programming: The act of designing and implementing computer programs)
+(Definition of member function: A fcuntion that is defined by a class and operates on
+objects of that class.)
+
+You have already experienced the object-oriented programming style when you used
+string objects or streams such as cin and cout. For example, you use the length and
+substr member functions to work with string objects. The >> and << operators that you
+use with sreams are also implemented as member functions.
+
+When you develop an object-oriented program, you create your own classes
+that describe what is important in your application. For example, in a student
+database you might weork with Student and Course classes. Of course, then
+you must apply member function for these classes.
+
+When you work with an object, you do not know how it is implemented. You 
+need to know how a string organizes a character sequence, or how the
+cin object reads input from the console. All you need to know is the public
+interface: the specifications for the member functions that you invoke. The process 
+of providing a pbulic interface, while hiding the implementation
+details, is called encapsulation. (Definition of public interface: The features
+(functions, variables, and nested types) of a class that are accessible to all
+clients.) (Defintion of encapsulation: The hiding of implementation details.)
+
+You will want to use encapsulation for your own classes. When you define a
+class, you will specify the behavior of the public member functions, but you 
+will hide the implementation details. Encapsulation benefits the programmers
+who use your classes. They can put your classes to work without having to 
+know their implementations, just as you are able to make use of the string
+and stream classes without knowing their internal detials.
+
+Encapsulation is also a benefit for the implementor of a class. When working,
+on a program that is being developed over a long period of time, it is common
+for implementation details to change, usually to make objects more efficient
+or more capable. Encapsulation is crucial to enabling these changes. When the
+implementation is hidden, the imeplementor is free to make improvements.
+Because the implementation is hidden, these improvements do not affect the
+programmers who use the objects.
+
+In this chapter, you will learn how to design and implement your own classes in C++,
+and how to structure your programs in awn object-oriented way, using the principle
+of encapsulation.
+
+

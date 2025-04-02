@@ -1,0 +1,16 @@
+6.6 COMMAND LINE ARGUMENTS
+
+Depending on the operating system and C++ development
+environment used, there are different methods of starting a
+program - for example, selecting "Run" in the compilation
+environment, by clicking on an icon, or by typing the name of
+the program at a prompt in a command shell window. The latter
+method is called "Invoking the program from the command line"
+When you use this method, you must type the name of the
+program, of course, but you can also type in additional 
+information that the program can use. These additional strings
+are called command line arguments. For example, If you start a
+program with the command line (Definition of command line: 
+The line the user types to start a program in DOS or UNIX or a
+command window in Windows. It consists of the program 
+name followed )
