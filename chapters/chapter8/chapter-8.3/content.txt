@@ -1,0 +1,133 @@
+8.3 IMPLEMENTING A SIMPLE CLASS
+
+In this section, we look at the implementation of a very simple class. You will see
+how objects store their data, and how member functions access the data
+of an object. Knowing how a very simple class operates will help you design
+and implement more complex classes later in this chapter.
+
+Our first example is a class that models a tally counter, a mechanical device
+that is used to count people - for example, to find out how many people attend
+a concert or a board a bus
+
+Whenever the operator pushes a button, the counter value advances by one.
+We model this operation with a count function. A physical counter has a
+display to show the current value. In our simulation, we use a get_value
+function instead.
+
+Here is an example of using the Counter class. As you know from using
+classes such as string and ifstream, you use the class name and a
+variable name to define an object of the class.
+
+Counter tally;
+
+In section, 8.7 you will learn how to ensure that objects are properly initialized.
+For now, we will call a member function to ensure that the object has the
+correct state:
+
+tally.reset();
+
+Next, we invoke member functions on our object. First, we invoke the count 
+member function twice, simulating two button pushes. Then we invoke the
+get_value member function to check how many times the button was pushed.
+
+tally.count();
+tally.count();
+result = tally.get_value(); // Sets result to 4
+
+As you can see, the tally object remembers the effect of prior function calls
+
+By specifying the member functions of the Counter class, we have now
+specified the behavior of Counter Objects. In order t4o produce this behavior,
+each object needs internal data, called the state of the object. In this simple
+simple example, the object state is very simple. It is the value that keeps track of
+how many times the counter has been advanced. (Definition of behavior (of an object).
+The actions taken by an object when its functions are invoked.) (Definition of state: 
+The current value of an object, which is determined by the cumulative action of all 
+functions that were invoked on it) 
+
+An object stores its state in data members. A data member is a storage 
+location that is present in each object of the class. (Definition of data member:
+A variable that is present in every object of a class.)
+
+You specify data members in the class defintion:
+
+class Counter {
+	public:	
+		...
+		private:
+		int value;
+		...
+}
+
+A class definition has a public and private section. As you will see in the
+following section, we always place data members in the private section.
+
+
+Each object of a class has its own data members. For example, if
+concert_counter and boarding_counter are two objects of the
+Counter class, then each object has its own value variable
+
+The member functions are declared in the public section of the class
+
+class Counter {
+	public:
+		void reset();
+		void count();
+		int get_value() const;
+	private:
+		int value;
+}
+
+the const reserved word denotes the fact that calling the get_value
+member function unlike other member function, does not change the object.
+We will discuss this distinction in more detail in the following section.
+
+Next, let us have a quick look at the implementation of the member functions
+of the Counter class. The count member function advances the counter 
+value by 1.
+
+void Counter::count() {
+	value = value + 1;
+}
+
+The function definition can be placed anywhere below the definition of the
+Counter class. The Counter:: prefix indicates that we are defining the
+count function of the Counter class.
+
+Now have another look at the imeplementation of the Counter::count
+member function. Note how the body of the function increments the data
+member value. Which data member? The one belonging to the object on
+which the function is called. For example, consider the call
+
+concert_counter.count();
+
+This call advances the value member of the concert_counter object.
+
+The reset member function simply resets the value to zero.
+
+void Counter::reset() {
+	value = 0;
+}
+
+Finally, the get_value member function returns the current value:
+
+int Counter::get_value() const {
+	return value;
+} 
+
+This member function is required so that the users of the Counter class can find
+o ut how often a particular counter has been clicked. A user cannot simply
+access the value data member. That variable has been declared in the
+private section. The private reserved word restricts access to the member
+functions of the same class. For example, the value variable can be accessed
+by the count and get_value member functions of the Counter class but not
+by a member function of another class. Those other functions need to use
+the get_value member function if they want to find out the counter's value,
+or the count member function if they want to change it.
+
+Private data members are an essential part of encapsulation. They allow a
+programmer to hide the implementation of a class from a class user.
+
+Here is a program that uses the Counter class.
+
+
