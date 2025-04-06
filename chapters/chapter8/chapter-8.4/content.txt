@@ -1,0 +1,124 @@
+8.4 Specifyting the Public interface of a Class
+
+To define a class, we first need to specify its public interface. The public
+interface of a class consists of all member functions that a user of the class
+may want to apply to its objects. (Definition of public interface: The features
+(functions, variables, and nested types) of a class that are accessibleto all clients.)
+
+Let's consider a simple example. We want to use objects that simulate cash
+registers. A cashier who rings up a sale presses a key to start the sale, then
+rings up each item. A display shows the amount owed as well as the total 
+number of items purchased.
+
+In our simulation, we want to carry out the following operations:
+
+- Add the price of an item
+- Get the total amount of all items, and the count of items purchased
+- Clear the cash register to start a new sale.
+
+The interface is specified in the class defintion.
+We will call our class CashRegister (We follow the convention of the
+name of the programmer defined class starts with an uppercase
+letter, as does each word within the name. This naming
+convention is called camel case because the uppercase 
+letters in the middle of the name look like the humps of a camel. (Definition
+of definition: A statement or series of statements that fully describes a variable,
+a function and its implementation, a type, or a class and its properties.)
+
+Here is the C++ syntax for the CashRegister class definition:
+
+class CashRegister {
+	public:
+		void clear();
+		void add_item(double price);
+		
+		double get_total() const;
+		int get_count() const;
+		
+	private:
+		data members-see Section 8.5
+		
+};
+
+The member functions are declared in the public section of the class. Any part 
+of the program can call the member functions. The data members are defined
+in the private section of the class. Only the member functions of the class can
+access those data members; they are hidden from the remainder of the
+program.
+
+It is legal to declare the private members before the public section, but in this
+book, we place the public section first. After all, most programmers reading a
+class are class users, not implementors, and they are more interested in the
+public interface than in the private implementation.
+
+The member function declarations look similar to the declarations of regular
+functions. These declarations do not provide any imeplementation. You will see
+in Section 8.6 how to implement the member functions.
+
+These are two kinds of member functions, called mutators and accessors. A
+mutator is a function that modifies the data members of the object. The
+CashRegister class has two mutators: clear and add_item. After you
+call eitgher of these functions, the total amount and item count are changed.
+(Definition of mutator function: A member function that changes the state of
+an object.) (Definition of accessor function: A member function that accesses
+an object but does not change it.)
+
+Accessors just query the object for some information without changing it. The
+CashRegister class has two accessors: get_total and get_count.
+Applying either of these functions to a CashRegister object simply returns
+a value and does not modify the object. In C++, you should use the const
+reserved word to mark accessor functions 
+
+double get_total() const;
+
+Member functions are invoked using the dot notation that you have already
+seen with string and stream functions:
+
+CashRegister register1; // Defines a CashRegister object
+register1.clear(); // Invokes a member function
+
+Now we know what a CashRegister object can do, but not how it does it. Of
+course, to use CashRegister objects in our programs, we don't need to
+know. We simply use the public interface. Figure 8.4.1 shows the interface of
+the CashRegister class. The mutator functions are shown with arrows
+pointing inside the private data to indicate that they modify the data. The
+accessor functions are shown with arrows pointing the other way to indicate
+that they just read the data.
+
+Here is the public interface of the CashRegister class.
+
+/**
+	A simulated cash register that tracks the item count
+	and the total amount due.
+**/
+
+class CashRegister {
+	public:
+		/*
+			Clears this cash register
+		*/
+		void clear();
+		
+		/*
+			Adds an item to this cash register.
+			@param price the price of the added item.
+		*/
+		void add_item(double price);
+		
+		/**
+			Gets the price of all items in the current sale.
+			@return the total amount
+		*/
+		double get_total() const;
+		
+		/*
+			Gets the number of items in the current sale.
+			@return the item count
+		*/
+		int get_count() const;
+		
+		
+	private:
+		// data members-see Section 9-4
+}
+
