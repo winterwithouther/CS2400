@@ -1,0 +1,87 @@
+8.5 DESIGNING THE DATA REPRESENTATION
+
+An object stores its data in data members. These are variables that are
+declared inside the class (Definition of data member: A variable that is present
+in every object of a class)
+
+When implementing a class, you have to determine which data each object
+needs to store. The object needs to have all the information necessary to carry
+out any member function call.
+
+Go throu gh all member functions and consider their data requirements. It is a
+good idea to start with accessor functions. For example, a
+CashRegister object must be able to return the correct value for the
+get_total function. That means, it must either store all entered prices and
+compute the total in the function call, or it must store the total.
+
+Now apply the same reasoning to the get_count function. If the cash
+register stores all entered prices, it can count them in the get_count
+function. Otherwise, you need to have a variable for the count.
+
+The add_item function receives a price as an argument, and it must record
+the price. If the CashReigster object stores an array of entered prices, then
+the add_item function appends the price. On the other hand, if we decide to
+store just the item and total and count, then the add_item function updates these
+two variables.
+
+Finally, the clear function must prepare the cash register for the next sale,
+either by emptying the array of prices or by setting the total and count to zero.
+
+We have now discovered two different ways of representing the data that the
+object needs. Either of them will work, and we have to make a choice. We will
+choose the simpler one: variables for the total price and the item count.
+
+The data members are defined in private section of the class definition:
+
+class CashRegister {
+	public: 
+		// See Section 8.4
+	private:
+		int item_count;
+		double total_price;
+};
+
+Every CashRegister object has a separate copy of these data members.
+
+Because the data members are defined to be private, only the member
+functions of the class can access them. Programmers using the
+CashRegister class cannot access the data members directly:
+
+int main() {
+	cout << register1.item_count; // Error-use get get_count()
+}
+
+All data access must occur through the public interface. Thus, the data
+members of an object are effectively hidden from the programmer using the
+class. While it is theoreitcally possible in C++ to leave data members
+unencapsulated by (by placing them into the public section), this is very
+uncommon in practice. We will always make all data members private in this
+book.
+
+Here is the CashRegister class with its data members defined:
+
+class CashRegister {
+	public:
+		/*
+			Clears this cash register
+		*/
+		void clear();
+		/*
+			Adds an item to this cash register.
+			@param price the price of the added item
+		*/
+		void add_item(double price);
+		/*
+			Gets the price of all items in the current sale.
+			@return the total amount
+		*/
+		double get_total() const;
+		/*
+			Gets the number of items in the current sale.
+		*/
+		double get_count() const;
+		
+		private:
+			int item_count;
+			double total_price;
+}
