@@ -1,0 +1,94 @@
+8.6 MEMBER FUNCTIONS
+
+The definition of a class declares its member functions. Each member
+function is defined separately, after the class definition. The following sections
+show how to define member functions.
+
+Implementing Member Functions
+
+Here is the implementation of the add_item function of the CashRegister
+class.
+
+void CashRegister::add_item(double price) {
+	item_count++;
+	total_price = total_price + price;
+}
+
+The CashRegister::prefix makes it clear that we are defining the
+add_item function of the CashRegister class. In C++ it is perfectly legal to
+have add_item functions in other classes as well, and it is important to
+specify exactly which add_item function we are defining (See Syntax 8.6.1)
+You use the ClassName::add_item syntax only when defining the function,
+not when calling it. When you call the add_item member function, the call
+has the form object.add_item(...)
+
+When defining an accessor member function, sipply the reserved word
+const following the closing paranthesis of the parameter list. Here is the
+get_count member function:
+
+int CashRegister::get_count() const {
+	return item_count;
+}
+
+You will find the other member functions with the example program at the end
+of this section.
+
+Implicity and Explicit Parameters
+
+Whenever you refer to a data member, such as item_count or
+total_price, in a member function, it denotes the data member of the
+object on which the member function was invoked. For example, consider the
+call
+
+register1.add_item(1.95);
+
+The first statement in the CashRegister::add_item function is
+
+item_count++;
+
+which item_count is incremented?
+
+When a member function is called on an object, the implicit parameter is a
+reference to that object. (Definition of implicit parameter: The object on which
+a member function is invoked. For example, in the call x.f(y), the object x is
+the implicit parameter of the function f.)
+
+You can think of the code of the add_item function like this:
+
+void CashRegister::add_item(double_price) {
+	implicit parameter.item_count++;
+	implicit parameter.total_price = implicit.parameter.total_price + price;
+}
+
+In C++, you do not actually write the implicit parameter in the function
+definition. For that reason, the parameter is called "implicit"
+
+When an item is added, it affects the data members of the cash
+register objet on which the function is invoked.
+
+In contrast, parameter variables that are explicitly mentioned in the function
+definition, suchas the price parameter variable, are called explicit
+parameters. Every member function has exactly on implicit parameter and
+zero or more explicit parameters. (Definition of explicit parameter: A parameter
+of a member function other than the object on which the function is invoked.)
+
+CALLING A MEMBER FUNCTION FROM A MEMBER FUNCTION
+
+When one member function calls another member function on the same
+object, you do not us the dot notation. Instead, you simply use the name of
+the other function. Here is an example. Suppose we want to implement a
+member function to add multiple instances of the same item. An easy way to 
+implement this function is to repeatedly call the add_item function:
+
+void CashRegister::add_items(int quantity, double price) {
+	for (int i = 1; i <= quantity; i++) {
+		add_item(price);
+	}
+}
+
+Here, the add_item member function is invoked on the implicit parameter.
+
+for (int i = 1; i <= quantity; i++) {
+	implicit parameter.add_item(price);
+}
+
