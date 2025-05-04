@@ -1,0 +1,179 @@
+7.3 COMMON ARRAY ALGORITHMS
+
+In the following sections, we discuss some of the most common algorithms for processing
+sequences of values. We present the algorithms so that you can use them with fully and
+partially filled arrays as well as vectors (which we will introduce in seciton 7.15). When we
+use the expression size of values, you should replace it with a constant or variable that
+yields the number of elements in the array (or the expression values.size() if values is a vector.)
+
+Filling
+
+This loop fills an arary with zeroes:
+
+for (int i = 0; i < size of values; i++) {
+	values[i] = 0;
+}
+
+Next, let us fill an array squares with the numebrs 0, 1, 4, 9, 16 and so on. Note that the
+element with index 0 contains 0^2, the element with index 1 contains 1^2, and so on.
+
+for (int i = 0; i < size of squares; i++) {
+	squares[i] = i * i;
+}
+
+COPYING
+
+Consider two arrays:
+
+int squares[5] = { 0, 1, 4, 9, 16 };
+int lucky_numbers[5];
+
+Now suppose you want to copy all values from the first array to the second. The following
+assignments is an error.
+
+lucky_numbers = squares; // error
+
+In C++, you cannot assign one array to another. Instead, you must use a loop to copy all
+elements:
+
+for (int i = 0; i < 5; i++) {
+	lucky_numbers[i] = squares[i];
+}
+
+SUM AND AVERAGE VALUE
+
+You have already encountered this algorithm in Section 4.11. Here is the code for
+computing the sum of all elements in an array.
+
+double total = 0;
+for (int i = 0; i < size of values; i++) {
+	total = total + values[i];
+}
+
+To obtain the average, divide by the number of elements:
+
+double average = total / size of values;
+
+Be sure to check that the size is not zero.
+
+MAXIMUM AND MINIMUM
+
+Use the Algorithm from Section 4.11 that keeps a variable for the largest
+element that you have encountered so far. Here is the implementation
+for arrays:
+
+double largest = values[0];
+for (int i = 1; i < size of values; i++) {
+	if (values[i] > largest) {
+		largest = values[i];
+	}
+}
+
+Note that the loop starts at 1 because we initialize largest with values[0]
+
+To compute the smallest value, reverse the comparison.
+
+These algorithms require that the array contain at least one element.
+
+ELEMENT SEPARATORS 
+
+When you display the elements of a collection, you usually want to separte them, often
+with commas or vertical lines, like this:
+
+1 | 4 | 9 | 16 | 25
+
+Note that there is one fewer separators than there are numbers. Print the separator before
+each element except the initial one (with index 0);
+
+for (int i = 0; i < size of values; i++) {
+	if (i > 0) {
+		cout << " | ";
+	}
+	
+	cout << values[i];
+}
+
+COUNTING MATCHES 
+
+Suppose you are asked to count how many elements of an array match a certain
+criterion. Visit each element, test whether it is a match, and if so, increment
+a counter. For example, the following loop counts the number of elements that are
+at least 100.
+
+int count = 0;
+for (int i = 0; i < size of values; i++) {
+	if (values[i] >= 100) {
+		count++;
+	}
+}
+
+LINEAR SEARCH
+
+You often need to search for the position of an element so that you can replace or remove it.
+Visit all elements until you have found a match or you have to come to the end of the array.
+Here we search for the position of the first element equal to 100.
+
+int pos = 0;
+bool found = false;
+while (pos < size of values && !found) {
+	if (values[pos] == 100) {
+		found = true;
+	} else {
+		pos++;
+	}
+}
+
+if found is true, then pos is the position of the first match.
+
+REMOVING AN ELEMENT
+
+Consider a partially filled array values whose current size is stored in the variable
+current_size. Suppose you want to remove the element with index pos from values. If
+the elements are not in any particular order, that task is easy to accomplish. Simply
+overwrite the element to be removed with the last element, then decrement the variable
+tracking the size.
+
+values[pos] = values[current_size - 1];
+current_size--;
+
+The situation is more complex if the order of the elements matters. Then you must move all
+elements following the element to be removed to a lower index, then decrement
+the variable holding the size of the array. 
+
+for (int i = pos + 1; i < current_size; i++) {
+	values[i - 1] = values[i];
+}
+
+current_size--;
+
+INSERTING AN ELEMENT
+
+If the order of the elements does not matter, you can simply insert new elements at the end,
+incrementing the variable tracking the size. For a Partially filled array:
+
+if (current_size < CAPACITY) {
+	current_size++;
+	values[current_size - 1] = new_element;
+}
+
+It is more work to insert an element at a particular position in the middle of a sequence.
+First, increase the variable holding the current size. Next, move all elements above the
+insertion location to a higher index. Finally, insert the new element. Here is the code for a
+partially filled array:
+
+if (current_size < CAPACITY) {
+	current_size++;
+	
+	for (int i = current_size - i; i > pos; i--) {
+		values[i] = values[i - 1];
+	}
+	
+	values[pos] = new_element;
+}
+
+Now the order of the movement: When you remove an element you first move
+the next element down to a lower index, then the one after that, until you finally get to the end of the
+array. When you insert an element, you start at the end of the array, move that element to a
+higher index, then move the one before that, and so on until you finally get to the insertion
+location.
+
