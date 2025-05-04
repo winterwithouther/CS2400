@@ -1,0 +1,155 @@
+Chapter Goals 7.1.1
+
+- To become familiar with using arrays and vectors to collect value 
+- To learn about common algorithms for processing arrays and vectors
+- To write functions that process arrays and vectors
+- To be able to use two dimensional arrays
+
+In many programs, you need to collect large number of values. In standard
+C++, you use arrays and vectors for this purpose. Arrays are a fundamental structure
+of the C++ language. The standard C++ library provides the vector construct as a more
+convenient alternative when working with collections whose size is not fixed.
+In this chapter, you will learn about arrays, vectors, and common algorithms for processing them.
+
+We start this chapter by introducing the array data type. Arrays are the fundamental mechanism
+in C++ for collecting multiple values. In the following sections, you will learn how to define arrays
+and how to access array elements. (Definition of array: A collection of values of the same type stored
+in contigous memory locations, each of which can be accessed by an integer index.)
+
+DEFINING ARRAYS
+
+Suppose you write a program that reads a sequence of values and prints out the sequence, marking
+the largest value, like this:
+
+32
+54
+67.5
+29
+34.5
+80
+115 <= largest value
+44.5
+100
+65
+
+You do not know which value to markas the largest one until you have seen them all. After all,
+the last value might be the largest one. Therefore, the program must first store all values before it can
+print them.
+
+Could you simply store each value in a separate variable? If you know that there are ten inputs, then
+you can store the values in ten variables value1, value2, value3, ... value10. However, such a
+sequence of variables is not very practical to use. You would have to write quite a bit of code ten
+times, once for each of the variables. To solve this problem, use an array: A structure for storing a
+sequence of values.
+
+Here we define an array that can hold ten values:
+
+double values[10]
+
+This is the definition of a variable values whose type is "array of dobule". That is, values stores
+a sequence of floating point numbers. The [10] indicates the size of the array.
+The array size must be a constant that is known at compile time.
+
+when you define an array, you can specify the initial values. For example,
+
+double values[] = { 32, 54, 67.5, 29, 34.5, 80, 115, 44.5, 100, 65 };
+
+When you supply initial values, you don't need to specify the array size. The compiler determines
+the size by counting the values.
+
+ACCESSING ARRAY ELEMENTS 
+
+The values stored in an array are called its elements. Each element has a position number, called an
+index. To access a value in the values array, you must specify which index you want to use. That is
+done with the [] operator. (Definition of element: A storage location in an array.) (Definition of index:
+the position of an element in an array.)
+
+values[4] = 34.5;
+
+Now the element with index 4 is filled with 34.5
+
+You can display the contents of the element with index 4 with the following command:
+
+cout << values[4] << endl;
+
+As you can see, the element values[4] can be used like any variable of type double.
+
+In C++, array position are counted in a way that you may find surprising. If you look carefully at.
+You will find that the fifth element was filled when we changed values[4]. In C++, the
+elements of arrays are numbered starting at 0. That is, the legal elements for the values array are
+
+    values[0], the first element
+    values[1], the second element
+    values[2], the third element
+    values[3], the fourth element
+    values[4], the fifth element
+    . . .
+    values[9], the tenth element
+	
+You will see in chapter 7 why this numbering scheme was chosen in C++
+
+You have to be careful about index values. Trying to access a element that does not exist
+in the array is a serious error. For example, if values has twenty elements, you are not allowed to
+access values[20].
+
+Attempting to access an element whose index is not within the valud index range is called
+a bounds error. The compiler does not catch this type of error. Even the running program generates no
+error message. If you make a bounds error, you silently read or overwrite another memory location. As a
+consequence, your program may have random errors, and it can even crash. (Defintion of bounds
+error. Trying to access an array element that is outside the legal range.)
+
+The most common bounds error is the following:
+
+double values[10];
+cout << values[10];
+
+There is no values[10] in an array with ten elements -- the legal index values range from 0 to 9.
+
+To visit all elements of an array, use a variable for the index. Suppose values has ten elements
+and the integer variable i takes values 0, 1, 2, and so on, up to 9. Then the expression values[i]
+yields each element in turn. For example, this loop displays all elements:
+
+for (int i = 0; i < 10; i++) {
+	cout << values[i] << endl;
+}
+
+Note that in the loop condition the index is less than 10 because there is no element corresponding
+to values[10];
+
+PARTIALLY FILLED ARRAYS
+
+An array cannot change size at run time. This is a problem when you don't know in advance how
+many elements you need. In that situation, you must come up with a good guess on the maximum
+number of elements that you need to store. We call this quantity the capacity. For example, we may
+decide that we sometimes want to store more than ten values, but never more than 100.
+
+const int CAPACITY = 100;
+double values[CAPACITY];
+
+In a typical program run, only part of the array will be occupied by actual elements. We call such an
+array a partially filled array. You must keep a companion variable that counts how many elements are
+actually used.
+
+The folowing loop collects values and fills up the values array.
+
+int current_size = 0;
+double input;
+
+while (cin >> input) {
+	if (current_size < CAPACITY) {
+		values[current_size] = input;
+		current_size++;
+	}
+}
+
+At the end of the loop, current_size contains the actual number of elements in the
+array. Note that you have to stop accepting inputs if the size of the array reaches the
+capacity.
+
+To process the gathered array elements, you again use the companion variable, not the
+capacity. This loop prints the partially filled array.
+
+for (int i = 0; i < current_size; i++) {
+	cout << values[i] << endl;
+}
+
