@@ -1,0 +1,50 @@
+7.2 COMPUTING AND SOCIETY: COMPUTER VIRUSES
+
+In November 1988, Robert Morris, a student at Cornell University, launched a so-called virus
+program that infected a significant fractino of computers connected to the Internet (which
+was much smaller than it is now.) Morris was sentenced to three years probation, 400 hours of 
+community service, and a $10,000 fine.
+
+In order to attack a computer, a vairus has to find a way to get its instructions executed. This
+particular program carried out a "buffer overrun" attack, providing an unexpectedly large
+input to a program on another machine. That program allocated an array of 512 characters,
+under the assumption that nobody would ever provide such a long input. Unfortunately, that
+program was writtein in the C programming lanaguage. C, like C++, does not check that an
+array is less than the length of the array. If you write into an array using an index that
+is too large, you simply overwrite memory locations that belong to some other objects. C
+programmers are supposed to provide safety checks, but that had not happened in the
+program under attack. The virus program purposefully filled the 512-character array with
+536 bytes. The excess 24 bytes overwrote a return address, which the attacker knew was
+stored juat after the array. When the function that read the input was finished. It didn't return
+to its caller but to code supplied by the virus (see the figure.) The virus was thus able to
+execute its code on a remote machine and infect it.
+
+In recent years, computer attacks have intensified and the motives have become more
+sinister. Instead of disabling computers, viruses often take permanent residence in the
+attacked computers. Criminal enterprieses rent out the processing power of millions of 
+hijacked computers for sending spam e-mail. Other viruses monitor every keystroke and
+send those that look like credit card numbers or banking passwords to their master, or
+encrypt all disk files and demand a monetary ransom payment from the unfortunate user to
+unlock the files.
+
+Typically, a machine gets infected because a user executes code downloaded from the
+internet, clicking on an icon or link that purposts to lead to something interesting, such as a 
+game or video clip. Antivirus programas check all downloaded programs against an ever-growing
+list of known viruses.
+
+When you use a computer for managing your finances, you need to be aware of the risk of
+infection. If a virus reads your banking password and empties your account, you will have a 
+hard time convincing your financial institution that it wasn't your act, and you will most 
+likely lose your money. It is a good idea to use banks that require "two-factor authentication"
+for major transactions, such as a callback on your cellphone.
+
+Viruses are even used for military purposes. In 2010, a virus dubbed Stuxnet spread through
+Microsoft Windows and infected USB sticks. The virus looked for Siemens Industrial
+computers and reporgrammed them in subtle ways. It appears that the virus was designed
+to damage the centrifuges of the Iranian nuclear enrichment operation. The computers
+controlled the centrifuges were not connected to the internet, but they were configured with
+USB sticks, some of which were infected. Security researchers believe that the virus was
+developed by U.S and ISrerali Intelligence agencies, and that it was successful in slowing
+down the Iranian nuclear program. Neither country has officially acknowledged or denied
+their role in the attacks.
+
