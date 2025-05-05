@@ -1,0 +1,19 @@
+7.4 SPEICLA TOPIC: SORTING WITH THE C++ LIBRARY
+
+You often want to sort the elements of an array or vector. Special Topic 7.5 shows you a
+sorting algorithm that is relatively simple but not very efficient. Efficient sorting algorithms
+are significantly more complex. Fortunately, The C++ libraRy provides an efficient sort
+function. To srot an array with size elements, call
+
+sort(a, a + size);
+
+To sort a vector values, make this call:
+
+sort(values.begin(), values.end());
+
+To fully understand why the sort function is called in this way, you will need to know
+Advanced C++ that is beyond the scope of this book. But don't hesitate to call the sort
+function whenever you need to sort an array or vector.
+
+To use the sort function, include the <algorithm> header in your program.
+
