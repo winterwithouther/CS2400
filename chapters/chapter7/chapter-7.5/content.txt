@@ -1,0 +1,26 @@
+7.5 SPECIAL TOPIC: A SORTING ALGORITHM
+
+A sorting algorithm rearranges the elements of a sequence so that they are stored in sorted
+order. Here is a simple sorting algorithm, called selection sort. Consider sorting the
+following array values: (Definition of selection sort: A sorting algorithm in which the 
+smallest element is repeatedly found and removed until no elements remain.)
+
+An obvious first step is to find the smallest element. In this case the smallest element is 5.
+stored in valiues[3]. You should move the 5 to the beginning of the array. of course, there 
+is already an element stored in values[0], namely 11. Therefore you cannot simply move
+values[3] into values[0] without moving the 11 somewhere else. You don't yet know
+where the 11 should end up, but you know for certain that it should not be in values[0]/
+Simply get it out of the way by swapping it with values[3].
+
+Repeat the process. The minimum value os the unsorted region is 11, which needs to be
+swapped with the first value of the unsorted region, 17.
+
+Now the unsorted region is only two elements long; keep to the same sucessful strategy.
+The minimum element is 12. Swap it with the first value, 17:
+
+That leaves you with an unprocessed region of length 1, but of course a region of length 1 is
+always sorted. You are done.
+
+This algorithm is simple to understand, but it is not very efficient. Computer scientists have
+studied sorting algorithms extensively and discovered significantly better algorithms. The
+sort function of the C++ library provides one such algorithm.
