@@ -1,0 +1,112 @@
+7.7 Arrays and Functions
+
+In this section, we will explore how to  write functions that process arrays
+
+A function that processes the values in an array needs to know the number of valid
+elements in the array. For example, here is a sum function that computes the sum of all
+elements in an array:
+
+double sum(double values[], int size) {
+	double total = 0;
+	for (int i = 0; i < size; i++) {
+		total = total + values[i]
+	}
+	
+	return total;
+}
+
+Note the special syntax for array parameter variables. When writing an array parameter
+variable, you palce an empty [] behind the parameter name. Do not specify the size of the
+array inside the brackets.
+
+When you call the function, supply both the name of the array and the size. For example,
+
+const int NUMBER_OF_SCORES = 10;
+double scores[NUMBER_OF_SCORES] = { 32, 54, 67.5, 29, 34.5, 80, 115, 44.5, 100, 65 };
+double total_score = sum(scores, NUMBER_OF_SCORES);
+
+double partial_score = sum(scores, 5);
+
+This call computes ths sum of the first five elements of the array. Remember the
+function has no way of knopwing how many elements the array has. it simply relies on the
+size that the caller provides.
+
+Array parameters are always reference parameters (You will see the reason in chapter 7.)
+Functions can modify array arguments, and those modifications affect the array that was
+passed into the function. For example, the following multiply function updates all
+elements in the array.
+
+void multiply(double values[], int size, double factor) {
+	for (int i = 0; i < size; i++) {
+		values[i] = values[i] * factor;
+	}
+}
+
+You do not use an & symbol to denote the reference parameter in this case.
+
+Although arrays can be function arugments, they cannot be function return types. If a
+function computes multiple values, the caller of the function must provide an array
+parameter variable to hold the result.
+
+void squares(int n, int result[]) {
+	for (int i = 0; i < n; i++) {
+		result[i] = i * i;
+	}
+}
+
+
+When a function changes the size of an array, it shoudl indicate to the caller how many
+elements the array has after the call. The easiest way to do this is to return the new size.
+Here is an example - a function that adds input values to an array.
+
+int read_inputs(double inputs[], int capacity) {
+	int current_size = 0;
+	double input;
+	
+	while (cin >> input) {
+		if (current_size < capacity) {
+			inputs[current_size] = input;
+			current_size++;
+		}
+	}
+	
+	return current_size;
+}
+
+
+Note that his function also needs to know the capacity of the array. Generally, a function
+that adds elements to an array needs to know its capacity. You would call this function like this:
+
+const int MAXIMUM_NUMBER_OF_VALUES = 1000;
+double values[MAXIMUM_NUMBER_OF_VALUES];
+int current_size = read_inputs(values, MAXIMUM_NUMBER_OF_VALUES);
+
+Alternatively, you cna pass the size as a reference parameter. This is more appropriate for
+functions that modify an existing array:
+
+void append_inmputs(dobule inpits[], int capacity, int &current_size) {
+	double input;
+	while (cin >> input) {
+		if (current_size < capacity) {
+			inputs[current_size] = input;
+			current_size++;
+		}
+	}
+}
+
+This function is called as
+
+append_inputs(values, MAXIMUM_NUMBER_OF_VALUES, current_size);
+
+After the clal, the current_size variable contains the new size.
+
+The following example program reads values from standard input, doubles them, and prints
+the result. The program uses three functions:
+
+- The read_inputs function fills an array with the input values. It returns the number
+of elements that were read
+- The multiply function modifies the contents of the array that it receives,
+demonstrating that arrays are passed by reference.
+- The print function does not modify the contents of the array that it receieves.
+
+ 
