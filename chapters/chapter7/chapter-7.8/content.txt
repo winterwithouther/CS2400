@@ -1,0 +1,11 @@
+7.8 SPECIAL TOPIC: CONSTANT ARRAY PAREMETERS
+
+When a function doesn't modify an array parameter, it is considered good style to add the
+const reserved word, like this:
+
+double sum(const double values[], int size)
+
+The const reserved word helps the reader of the code, making it clear that the function
+keeps the array elements unchanged. If the implementation of the function tries to modify,
+the array, the compiler issues a warning.
+
