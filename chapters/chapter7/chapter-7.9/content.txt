@@ -1,0 +1,91 @@
+7.9 PROBLEM SOLVING: ADAPTING ALGORITHMS
+
+In section 7.3, you were introduced to a number of fundamental array algorithms. these
+algorithms form the building blocks for many programs that process arrays. In general, it is
+a good problem-solving strategy to have a repertoire of fundamental algorithms that you
+can combine and adapt.
+
+Consider this example problem: You are given the quiz scores of a student. You are to
+compute the final quiz score, which is the sum of all scores after droppest the lowest one.
+For example, if the scores are
+
+8 7 8.5 9.5 7 4 10
+
+Then the final score is 50.
+
+We do not have a ready-made algorithm for this situation. Instead, consider which
+algorithms may be related. These include:
+
+- calculating the sum
+- finding the minimum
+- removing an element
+
+Now we can formulate a plan of attack that combines these algorithms
+
+Find the minimum.
+Remove the minimum from the array.
+Calculate the sum.
+
+Let's try it out with our exmaple. the minimum of is 4. How do we remove it?
+
+Now we have a problem. The removal algorithm in section 7.3 locates the element to be
+removed by using the position of the element, not the value.
+
+But we have another algorithm for that:
+- Linear search
+
+We need to fix our plan of attack:
+
+- Find the minimum value.
+- Find the position of the minimum
+- Remove the element at the position from the array
+- Calculate the sum
+
+Will it work? Let's continue with our example
+
+We found a minumum value of 4. Linear search tells us that the value 4 occures at position 5.
+
+We remove it.
+
+Finally, we can compute the sum 8 + 7 + 8.5 + 9.5 + 7 + 10 = 50.
+
+This walkthrough demonstrates that our strategy works.
+
+Can we do better? It seems a bit inefficient to find the minimum and then make another
+pass through the array to obtain its position.
+
+We can adapt the algorithm for finding the minimum to yeild the position of the minimum
+Here is the original algorithm
+
+double smallest = values[0];
+for (int i = 1; i < size ov values; i++) {
+	if (values[i] < smallest) {
+		smallest = values[i];
+	}
+}
+
+When we find the smallest value, we also want to update the position:
+
+if (values[i] < smallest) {
+	smallest = values[i];
+	smallest_position = i;
+}
+
+In fact, then there is no reason to keep track of the smallest value any longer. It is simply
+values[smallest_position]. With this insight, we can adapt the algorithm as follows:
+
+int smallest_position = 0;
+for (int i = 1; i < size of values; i++) {
+	if (values[i] < vlaues[smallest_position]) {
+		smallet_position = i;
+	}
+}
+
+With this adaptation, our problem solved with the following strategy:
+
+Find the position of the minimum
+remove the element at the position from the array.
+Calculate the sum.
+
+Here is a program that implements this strategy.
+
